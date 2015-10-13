@@ -1,0 +1,2 @@
+This is a sample user case that we extract 3d information and particle localization from fission yeast.
+To test this code, just add all the "sample user case" and all its sub folders to the matlab path, and run the main.m code.
