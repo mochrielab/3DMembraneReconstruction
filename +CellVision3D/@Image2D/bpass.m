@@ -84,12 +84,20 @@ function res = bpass(image_array,lnoise,lobject,threshold)
 %       David G. Grier.  It should be considered 'freeware'- and may be
 %       distributed freely in its original form when properly attributed.  
 
+
+
 if nargin < 3, lobject = false; end
 if nargin < 4, threshold = 0; end
 
 normalize = @(x) x/sum(x);
 
 image_array = double(image_array);
+
+% added by Yao, extend window size
+image_array2 = zeros(size(image_array)+2*lobject)+mean(image_array(:));
+image_array2(lobject+1:end-lobject,lobject+1:end-lobject)=image_array;
+image_array=image_array2;
+%
 
 if lnoise == 0
   gaussian_kernel = 1;
@@ -153,3 +161,10 @@ filtered(:,(end - lzero + 1):end) = 0;
 % res = filtered;
 filtered(filtered < threshold) = 0;
 res = filtered;
+
+
+% added by Yao
+res=res(lobject+1:end-lobject,lobject+1:end-lobject);
+
+
+end

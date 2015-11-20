@@ -1,4 +1,4 @@
-classdef CellFilter < handle
+classdef CellFilter < CellVision3D.HObject 
     % filter for cells 
     % 11/181/2015 Yao Zhao
     
@@ -9,7 +9,6 @@ classdef CellFilter < handle
     methods
         % constructer
         function obj=CellFilter(varargin)
-            obj@handle();
             obj.setParam(varargin{:});
         end
         

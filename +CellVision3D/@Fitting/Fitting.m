@@ -1,4 +1,4 @@
-classdef Fitting < handle
+classdef Fitting < CellVision3D.HObject
     % a collection of fitting functions
     % Yao Zhao 11/19/2015
     properties

@@ -1,4 +1,4 @@
-classdef Movie < handle
+classdef Movie < CellVision3D.HObject
     % a universal movie class for microscope data analysis
     % 3/21/2015
     % Yao Zhao
@@ -62,18 +62,10 @@ classdef Movie < handle
             else
                 throw(MException('Movie@Unsupported','unsupported options'));
             end
-            
-            % initialize params
-            
+                        
         end
         
-        % parameter setter
-        function setParam(obj,varargin)
-            n=floor(nargin/2);
-            for i=1:n
-                obj.(varargin{2*i-1})=varargin{2*i};
-            end
-        end
+
         
         % basic movie and image
         [ obj ] = setChannels( obj, varargin )

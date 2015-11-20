@@ -1,4 +1,4 @@
-classdef Channel < handle & matlab.mixin.Heterogeneous
+classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous 
     % microscope channel 
     % 11/17/2015
     

@@ -1,4 +1,4 @@
-classdef DriftControlBrightfield3D < handle
+classdef DriftControlBrightfield3D < CellVision3D.HObject
     % drift control class for movies
     % track the bead diffraction patterns in 3d to infer the drift
     % 11/19/2015 Yao Zhao

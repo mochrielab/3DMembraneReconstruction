@@ -1,10 +1,12 @@
-classdef PSF
-    %point spread function of the microscope
+classdef PSF < CellVision3D.HObject
+    % point spread function of the microscope
+    % used to extract point spread function from image template
+    % 11/20/2015 Yao Zhao
     
     properties
-        dsigma
-        sigmaxy
-        sigmaz
+        dsigma % differences in the sigma between xy and z in the unit of pixels, not voxels
+        sigmaxy % sigma xy
+        sigmaz % sigma z, unit of pixels
     end
     
     methods

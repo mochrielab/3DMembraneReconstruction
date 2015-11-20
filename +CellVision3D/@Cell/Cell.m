@@ -1,4 +1,4 @@
-classdef Cell < matlab.mixin.Heterogeneous & handle
+classdef Cell < CellVision3D.HObject 
     % cell class
     % wrapper for the data of each cell
     % 11/17/Yao

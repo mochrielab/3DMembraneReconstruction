@@ -1,4 +1,4 @@
-classdef ParticleTracker < handle 
+classdef ParticleTracker < CellVision3D.HObject 
     % base class for particle tracking
     % use for extracing particle position from given image
     
@@ -23,13 +23,7 @@ classdef ParticleTracker < handle
                 obj.(varargin{2*i-1})=varargin{2*i};
             end
         end
-        % parameter setter
-        function setParam(obj,varargin)
-            n=floor(nargin/2);
-            for i=1:n
-                obj.(varargin{2*i-1})=varargin{2*i};
-            end
-        end
+
     end
     
     methods (Abstract)

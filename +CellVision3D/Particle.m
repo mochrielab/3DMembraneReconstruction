@@ -1,4 +1,4 @@
-classdef Particle < matlab.mixin.Heterogeneous & handle 
+classdef Particle < CellVision3D.HObject
     % basic class for particle analysis
     % Yao Zhao 11/17/2015
     properties (SetAccess = protected)
