@@ -1,0 +1,19 @@
+function [  ] = plot(cells,iframe,img )
+%plot cells
+
+if ~isempty(img)
+    imagesc(img);colormap gray;axis image;hold on;
+end
+
+labels=cells.getParticleLabels;
+colors=hsv(length(labels)+1);
+for icell=1:length(cells)
+    bb=cells(icell).contours(1).getBoundaries(iframe);
+    plot(bb{1}(:,1),bb{1}(:,2),'LineWidth',2,'Color',colors(icell,:));hold on;
+    cnt=cells(icell).particles.getCentroid(iframe);
+    plot(cnt(:,1),cnt(:,2),'o','LineWidth',2,'Color',colors(icell,:));hold on;
+end
+
+
+end
+
