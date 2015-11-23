@@ -9,26 +9,20 @@ classdef ImageSegmenterFluorecentMembrane2D < CellVision3D.ImageSegmenter
     end
     
     methods
-        %         % constructor
-        %         function ImageSegmenterFluorecentMembrane2D
-        %         end
-        
         
         % segment a image
-        function out=segment(obj,image)
+        function out=segment(obj,im)
             %%
             import CellVision3D.*
-            %             close all;
             lnoise=obj.lnoise;
             lobject=obj.lobject;
-            im=image;
             im=Image2D.removeLinearBackground(im);
             bimg=Image2D.bpass(im,lnoise,lobject);
             init=[.3,.9];
             lb=[.01, .05];
             ub=[.9, .95];
-            options=optimoptions('fmincon','DiffMinChange',0.1);
-            p=fmincon(@(th)foptim(th,bimg,lobject),init,[1 -1],[-0.01],[],[],lb,ub,[],options)
+            options=optimoptions('fmincon','DiffMinChange',0.1,'Display','off');
+            p=fmincon(@(th)foptim(th,bimg,lobject),init,[1 -1],[-0.01],[],[],lb,ub,[],options);
             bw2=edge(bimg,'canny',[p(1),p(2)]);
             bw2=bwmorph(bw2,'close');
             bw2=imfill(bw2,'holes');
@@ -44,7 +38,7 @@ classdef ImageSegmenterFluorecentMembrane2D < CellVision3D.ImageSegmenter
             for i=1:length(cc)
                 bw3(cc(i).PixelIdxList)=1;
             end
-            Image2D.view(im,bw3);
+            
             % function to be optimized
             function fmin=foptim(th,bimg,lobject)
                 if(th(1)>th(2))

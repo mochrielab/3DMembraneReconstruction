@@ -5,10 +5,12 @@ classdef Fitting < CellVision3D.HObject
     end
     
     methods (Static)
-        % n particle 3d gaussian no background
+        % n peak 3d gaussian no background
         [ fmin ,grad] = NGaussian3D0B( p,x,y,z,img3,sigdiff,zxr)
-        % n particle 2d gaussian no background
+        % n peak 2d gaussian no background
         [ fmin ,grad] = NGaussian2D0B( p,x,y,img)
+        % n peak 1d gaussian no background 
+        [ fmin, grad, fval ] = NGaussian1D0B( p, xarray, yarray )
     end
     
 end

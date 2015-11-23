@@ -23,8 +23,9 @@ for ifile=1:length(fns)
     obj.getChannel('cut11').setIlluminationcorrection(dirpath);
     image=obj.getChannel('cut11').grabProjection(1);
     %%
-    sg=ImageSegmenterFluorecentMembrane2D();
-    out=sg.segment(image);
+    image3=obj.getChannel('cut11').grabImage3D(1);
+    sg=ImageSegmenterFluorecentMembrane3DSphere();
+    out=sg.segment(image3);
     %% find contours
     contours=obj.getChannel('cell').init(1);
     %% find particles

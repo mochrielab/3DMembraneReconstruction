@@ -6,6 +6,13 @@ classdef ImageSegmenter < CellVision3D.HObject
     properties
     end
     
+    methods 
+        % constructor
+        function obj = ImageSegmenter(varargin)
+            obj.setParam(varargin{:});
+        end
+    end    
+    
     methods (Abstract)
         out=segment(obj,image);
     end

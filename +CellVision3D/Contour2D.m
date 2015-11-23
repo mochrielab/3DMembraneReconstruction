@@ -1,4 +1,4 @@
-classdef Contour2D < matlab.mixin.Heterogeneous & handle
+classdef Contour2D < CellVision3D.Contour
     % basic class for contour analysis
     % Yao Zhao 11/17/2015
     properties (SetAccess = protected)
@@ -16,16 +16,12 @@ classdef Contour2D < matlab.mixin.Heterogeneous & handle
     methods
         % constructor
         function obj=Contour2D(label,numframes,bb)
-            obj.label=label;
+            obj@CellVision3D.Contour(label,numframes);
             obj.dimension=2;
-            obj.numframes=numframes;
-            obj.boundaries=cell(numframes,1);
+            obj.boundaries=cell(obj.numframes,1);
             obj.tmpbb=bb;
         end
-%         % set boundaries
-%         function setBoundaries(obj,bb,iframe)
-%             obj.boundaries{iframe}=bb;
-%         end
+
         % get bb
         function bb=getBoundaries(obj,varargin)
            currentframe=obj.iframe;
