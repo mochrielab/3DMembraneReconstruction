@@ -3,7 +3,7 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous
     % 11/17/2015
     
     
-    properties (SetAccess = protected)
+    properties (SetAccess = public)
         label
         type
         numframes

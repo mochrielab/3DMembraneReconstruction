@@ -2,8 +2,8 @@ function [ obj ] = setChannels( obj, varargin )
 % set channel information for Movie
 % set channel names and types
 % example goes here: 
-% setChannles('brightfield3d','cellimage','fluorescentmembrane3d',
-% 'nucleimembrane','fluorescentparticle3d','spindle pole body')
+% setChannles('BrightfieldContour3D','cellimage','FluorescentMembrane3D',
+% 'nucleimembrane','FluorescentParticle3D','spindle pole body')
 % 3/21/2015
 % Yao Zhao
 

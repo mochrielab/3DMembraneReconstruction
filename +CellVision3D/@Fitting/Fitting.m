@@ -11,6 +11,8 @@ classdef Fitting < CellVision3D.HObject
         [ fmin ,grad] = NGaussian2D0B( p,x,y,img)
         % n peak 1d gaussian no background 
         [ fmin, grad, fval ] = NGaussian1D0B( p, xarray, yarray )
+        % n peak 3d gaussian no background 2 sigma 
+         [ fmin ,grad] = NGaussian3D0B2S( p,x,y,z,img3,zxr)
     end
     
 end

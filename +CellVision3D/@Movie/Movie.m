@@ -10,7 +10,7 @@ classdef Movie < CellVision3D.HObject
     end
     
     %load movie
-    properties (SetAccess = protected)
+    properties (SetAccess = public)
         % file system
         filename % file name
         path % file path
@@ -19,7 +19,7 @@ classdef Movie < CellVision3D.HObject
         % microscope data
         pix2um  % pixel 2 microns
         vox2um  % voxel height
-        aberation=1.33/1.516; % aberation correction
+        aberation=1 % aberation correction
         
         % movie information
         numstacks % number of stacks
@@ -34,8 +34,9 @@ classdef Movie < CellVision3D.HObject
         numchannels % number of channels
         channels % channel handles
         
-        % extracted cells
+        % extracted data
         cells
+        particles
     end
     
     properties (Hidden=true)
@@ -59,8 +60,10 @@ classdef Movie < CellVision3D.HObject
             % use file in the path
             elseif length(varargin)==1 && exist(varargin{1},'file')
                 [obj.path,obj.filename,obj.extension]=fileparts(varargin{1});
+            elseif length(varargin)==1
+                throw(MException('Movie:CantFindFile','can not find file'));
             else
-                throw(MException('Movie@Unsupported','unsupported options'));
+                throw(MException('Movie:Unsupported','unsupported options'));
             end
                         
         end

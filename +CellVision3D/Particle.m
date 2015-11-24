@@ -8,6 +8,7 @@ classdef Particle < CellVision3D.HObject
         sigmas    % width of the particles
         brightness% brightness of the particles
         numframes % number of frames
+        resnorm   % fitting of the particle
     end
     
     properties (SetAccess = protected)
@@ -26,14 +27,17 @@ classdef Particle < CellVision3D.HObject
             obj.brightness=nan(numframes,1);
         end
        % add data to frame
-       function addFrame(obj,pos,iframe)
+       function addFrame(obj,pos,iframe,varargin)
            dim=obj.dimension;
            obj.positions(iframe,1:dim)=pos(1:dim);
-           obj.brightness(iframe,1)=pos(dim+1);
+           obj.brightness(iframe,1)=pos(end);
            numsigma=length(pos)-1-dim;
-           obj.sigmas(iframe,1:numsigma)=pos(dim+2:end);
+           obj.sigmas(iframe,1:numsigma)=pos(dim+1:end-1);
            obj.iframe=iframe;
            obj.tmppos=pos(1:dim+1);
+           if nargin>=4
+               obj.resnorm=varargin{1};
+           end
        end
        % get centroid of the object
        % may pass in 1 variable to get centroid from that frame
@@ -51,6 +55,13 @@ classdef Particle < CellVision3D.HObject
                else
                    cnt(ip,:)=obj(ip).positions(currentframe,1:dim);
                end
+           end
+       end
+       % remove drift
+       function particles=removeDrift(particles,drift)
+           for i=1:length(particles)
+               particles(i).positions=particles(i).positions-drift;
+               
            end
        end
     end

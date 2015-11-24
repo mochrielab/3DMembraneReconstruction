@@ -13,7 +13,6 @@ classdef Particle3D < CellVision3D.Particle
             obj.tmppos=pos;
             obj.zxr=zxr;
         end
-        % fit positions
        
         
     end

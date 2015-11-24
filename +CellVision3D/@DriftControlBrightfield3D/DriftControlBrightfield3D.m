@@ -1,4 +1,4 @@
-classdef DriftControlBrightfield3D < CellVision3D.HObject
+classdef DriftControlBrightfield3D < CellVision3D.DriftControl
     % drift control class for movies
     % track the bead diffraction patterns in 3d to infer the drift
     % 11/19/2015 Yao Zhao
@@ -11,16 +11,11 @@ classdef DriftControlBrightfield3D < CellVision3D.HObject
         centroid % center for the bead
         template % saved template for analysis
         
-        positiondrift % drift coordinates
         
         dimension=3 % 3d
         numframes % number of frames
         
         lockthreshold =0.5
-%         locksensitivity
-%         lockzcenter
-%         lockxcenter
-%         lockycenter
 
      end
     
@@ -29,7 +24,7 @@ classdef DriftControlBrightfield3D < CellVision3D.HObject
         function obj=DriftControlBrightfield3D(cnt,windowsize)
             obj.centroid=round(cnt);
             obj.windowsize=windowsize;
-%             obj.numframes=numframes;
+            obj.dimension=3;
         end
         
         % generate template

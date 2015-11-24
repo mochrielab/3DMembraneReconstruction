@@ -1,7 +1,7 @@
 function [ gconv ] = bpass(img,lnoise,lobject,zxr )
 %bpass for 3d
 
-img2=zeros(size(img)+2*lobject);
+img2=zeros(size(img)+2*lobject)+mean(img(:));
 img2(1+lobject:end-lobject,1+lobject:end-lobject,1+lobject:end-lobject)=img;
 img=img2;
 clear img2;
