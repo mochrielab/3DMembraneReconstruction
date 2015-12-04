@@ -23,20 +23,40 @@ classdef DriftControlParticles < CellVision3D.DriftControl
             end
             
            % merge
-           rms=zeros(numparticles,obj.dimension);
            for ipar=1:numparticles
                x(:,ipar)=particles(ipar).positions(:,1);
                y(:,ipar)=particles(ipar).positions(:,2);
                if obj.dimension==3
                    z(:,ipar)=particles(ipar).positions(:,3);
                end
-               rms(ipar,:)=var(particles(ipar).positions,0,1);
+           end
+           
+           % get initial drift
+           mx = mean(x,2);
+           drift.x =mx-mx(1);
+           my = mean(y,2);
+           drift.y = my-my(1);
+           if obj.dimension==3
+               mz=mean(z,2);
+               drift.z=[mz-mz(1)];
+           end
+           if obj.dimension==2
+               drift=[drift.x,drift.y];
+           elseif obj.dimension==3
+               drift=[drift.x,drift.y,drift.z];
+           end
+           
+           % calculate rms based on initial drift
+           rms=zeros(numparticles,obj.dimension);
+           for ipar=1:numparticles
+               rms(ipar,:)=var(particles(ipar).positions - drift,0,1);
            end
            
            % exclude bad particles
-           chooseind= sum(rms>ones(numparticles,1)*(mean(rms,1)+2*std(rms,0,1)),2)==0;
+           chooseind= sum(rms>ones(numparticles,1)*(mean(rms,1)+1*std(rms,0,1)),2)==0;
            
-           % get the drift in each axis
+           % recalculate the drift in each axis
+           drift=[];
            mx = mean(x(:,chooseind),2);
            drift.x =mx-mx(1);
            my = mean(y(:,chooseind),2);

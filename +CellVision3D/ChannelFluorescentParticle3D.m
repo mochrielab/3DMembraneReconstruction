@@ -55,6 +55,7 @@ classdef ChannelFluorescentParticle3D < CellVision3D.Channel & CellVision3D.Part
                             particles(ip).addFrame(pos(ip,:),iframe);
                         end
                     end
+                    dispay(['frame processed ',num2str(iframe)])
                     toc
                 end
             elseif isa(input,'CellVision3D.Particle')
