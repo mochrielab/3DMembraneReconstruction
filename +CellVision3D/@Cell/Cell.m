@@ -25,7 +25,10 @@ classdef Cell < CellVision3D.HObject
     end
     
     methods(Static)
+        %
         cells=constructCellsByContoursParticles(contours, varargin)
+        %
+        cells=constructCellsByMembraneParticles(membranes, varargin)
     end
 end
 

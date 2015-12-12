@@ -8,7 +8,7 @@ classdef Contour < matlab.mixin.Heterogeneous & CellVision3D.HObject
         numframes % number of frames
     end
     properties (Access = protected)
-        iframe % current frame
+        iframe=0 % current frame
     end
     
     methods

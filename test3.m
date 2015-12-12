@@ -26,10 +26,20 @@ for ifile=1%:length(fns)
     contours=obj.getChannel('cut11').init(1);
     obj.getChannel('cut11').view();
     %% get the particles based on the first stack
-        obj.getChannel('lacO').setParam('zxr',obj.zxr,'lnoise',.1,...
+    obj.getChannel('lacO').setParam('zxr',obj.zxr,'lnoise',.1,...
         'lobject',5,'peakthreshold',.3,'fitwindow',15);
     particles=obj.getChannel('lacO').init(1);
     obj.getChannel('lacO').init(1);
+    obj.getChannel('lacO').view();
+    %% construct cell
+    cells=Cell.constructCellsByMembraneParticles(contours, particles);
+    filter=CellFilter('lacO','particlenumber',[1,1]);
+    cells=filter.applyFilter(cells);
+
+    %%
+    for ichannel=1:obj.numchannels
+        obj.getChannel(ichannel).run(cells);
+    end
 end
 
 

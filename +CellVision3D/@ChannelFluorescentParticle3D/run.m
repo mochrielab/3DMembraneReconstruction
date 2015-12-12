@@ -1,5 +1,8 @@
 function [  ] = run(obj,input)
+% run the analysis
 % Yao Zhao 12/11/2015
+
+%%
 if isa(input,'CellVision3D.Cell')
     cells = input;
     for iframe=1:obj.numframes
@@ -18,14 +21,14 @@ if isa(input,'CellVision3D.Cell')
                 pos(ip,:)=particles(ip).tmppos;
             end
             % fit
-            pos=obj.fitPositions...
-                (img3,pos,'notshowplot');
+            [pos,resnorm]=obj.fitPositions...
+                (img3,pos,'noshowplot');
             % save result to particles
             for ip=1:nump
-                particles(ip).addFrame(pos(ip,:),iframe);
+                particles(ip).addFrame(iframe,pos(ip,:),resnorm);
             end
         end
-        dispay(['frame processed ',num2str(iframe)])
+        display(['frame processed ',num2str(iframe)])
         toc
     end
 elseif isa(input,'CellVision3D.Particle')
@@ -43,11 +46,15 @@ elseif isa(input,'CellVision3D.Particle')
             [pos,resnorm]=obj.fitPositions...
                 (img3,pos,'noshowplot');
             % save result to particles
-            particles(ip).addFrame(pos,iframe,resnorm);
+            particles(ip).addFrame(iframe,pos,resnorm);
         end
+        display(['frame processed ',num2str(iframe)])
         toc
     end
 else
     warning('wrong type');
 end
+
+
 end
+

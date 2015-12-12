@@ -18,7 +18,7 @@ for ifile=1%:length(fns)
     %% load movie and set channel
     ifile=1
     obj=Movie(fullfile(datapath,fns{ifile}));
-    obj.setChannels('FluorescentParticle3D','mcherry',...
+    obj.setChannels('FluorescentParticle3D','lacO',...
         'FluorescentMembrane3D','cut11');
     obj.load();
     obj.getChannel('cut11').setIlluminationcorrection(dirpath);
@@ -26,8 +26,17 @@ for ifile=1%:length(fns)
     contours=obj.getChannel('cut11').init(1);
     obj.getChannel('cut11').view();
     %% get the particles based on the first stack
-    particles=obj.getChannel('mcherry').init(1);
-    
+    obj.getChannel('lacO').setParam('zxr',obj.zxr,'lnoise',.1,...
+        'lobject',5,'peakthreshold',.3,'fitwindow',15);
+    particles=obj.getChannel('lacO').init(1);
+    obj.getChannel('lacO').init(1);
+    obj.getChannel('lacO').view();
+    %% construct cell
+    cells=Cell.constructCellsByContoursParticles(contours, particles);
+        filter=CellFilter('lacO','particlenumber',[1,1],'SPB','particlenumber',[1,1]);
+
+    %%
+    obj.getChannel(1).run;
 end
 
 

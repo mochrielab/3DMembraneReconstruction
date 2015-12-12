@@ -37,8 +37,8 @@ classdef Contour2D < CellVision3D.Contour
                    bb(ip)=obj(ip).boundaries(currentframe);
                end
            end
-
         end
+        
     end
     
     methods (Abstract)

@@ -25,11 +25,35 @@ classdef Contour3D < CellVision3D.Contour & CellVision3D.Object3D
             obj.zxr=zxr;
         end
         
-        % addframe to acertain frame
-        addFrame(obj,iframe,varargin)
+        % set vertices at frame
+        function setVertices(obj,vertices,iframe)
+            obj.vertices{iframe}=vertices;
+            obj.tmpvertices=vertices;
+        end
+        
+        % set vertices at frame
+        function setFaces(obj,faces,iframe)
+            obj.faces{iframe}=faces;
+            obj.tmpfaces=faces;
+        end
         
         % get boundaries
-        bb=getBoundaries(obj,varargin)
+        function bb=getBoundaries(obj,varargin)
+           currentframe=obj.iframe;
+           if nargin>=2
+               currentframe=varargin{1};
+           end
+           
+           bb=cell(length(obj),1);
+           for ip=1:length(obj)
+               if currentframe==0
+                   bb(ip)={obj(ip).tmpbb};
+               else
+                   bb(ip)=obj(ip).boundaries(currentframe);
+               end
+           end
+        end
+        
     end
     
 end

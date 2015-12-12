@@ -19,21 +19,25 @@ faces=[faces,nan(numfaces,1)];
 
 % direction vector
 n=v(1:3)/norm(v(1:3));
+% interseption
 c=v(4);
 
 % calculate the line that faces intersect with plane
 linesection=[];
 facechoose=false(numfaces,1);
 for iface=1:numfaces
+    % calculate distance to the plane from 3 vertices and sort them
     faceind=faces(iface,1:3);
     pmat=pts(faceind',:);
     [planedist,sortind] = sort( pmat*n'-c);
     % decide if triangle intersect or not
+    % intersect if distance 1 and 3 have different sign
     if planedist(3)>=0 && planedist(1)<=0
         p1=pts(faceind(sortind(1)),:);
         p2=pts(faceind(sortind(2)),:);
         p3=pts(faceind(sortind(3)),:);
         faceind=faceind(sortind(1:3));
+        % two cases for the vertices 2
         if planedist(2)>=0
             y1=crosspoint(p1,p2,n,c);
             y2=crosspoint(p1,p3,n,c);
@@ -60,18 +64,24 @@ end
 lowerfaces=faces(facechoose,:);
 
 % connect all lines together
+% lines remain
 lineleft=linesection;
+% lines new
 linenew=[];
+% all contours
 allcontours=[];
 while ~isempty(lineleft)
+    % if new line is eimpty, start a line
     if isempty(linenew)
         linenew=[lineleft(1,[1:3,7:10]);lineleft(1,[4:6,7:10])];
         lineleft=lineleft(2:end,:);
     else
         lastpoint=linenew(end,1:3);
         numleft=size(lineleft,1);
-        l1=find(sum((lineleft(:,1:3)-ones(numleft,1)*lastpoint).^2,2)<1e-20);
-        l2=find(sum((lineleft(:,4:6)-ones(numleft,1)*lastpoint).^2,2)<1e-20);
+%         l1=find(sum((lineleft(:,1:3)-ones(numleft,1)*lastpoint).^2,2)<1e-20);
+%         l2=find(sum((lineleft(:,4:6)-ones(numleft,1)*lastpoint).^2,2)<1e-20);
+        l1=find(sum((lineleft(:,1:3)-ones(numleft,1)*lastpoint).^2,2)==0);
+        l2=find(sum((lineleft(:,4:6)-ones(numleft,1)*lastpoint).^2,2)==0);
         if ~isempty(l1)
             linenew=[linenew;lineleft(l1,[4:6,7:10])];
             lineleft=lineleft((1:numleft)~=l1,:);
