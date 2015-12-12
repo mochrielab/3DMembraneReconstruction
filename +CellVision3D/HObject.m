@@ -11,7 +11,22 @@ classdef HObject < handle
                 obj.(varargin{2*i-1})=varargin{2*i};
             end
         end
+        
+
+        
+        
     end
     
-end
-
+    methods (Static)
+                % search for string
+        function found=check(strings,string)
+            found=false;
+            for i=1:length(strings)
+                if strcmp(strings{i},string)
+                    found=true;
+                    return;
+                end
+            end
+        end
+    end
+end    

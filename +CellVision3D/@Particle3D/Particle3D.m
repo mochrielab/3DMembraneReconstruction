@@ -1,9 +1,8 @@
-classdef Particle3D < CellVision3D.Particle
+classdef Particle3D < CellVision3D.Particle & CellVision3D.Object3D
     % class for 3D particle analysis
     % Yao Zhao 11/17/2015
 
     properties (SetAccess = protected)
-        zxr=1       % z to xy ratio of the zstack
     end
     
     methods 

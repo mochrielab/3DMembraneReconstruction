@@ -1,4 +1,5 @@
-classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous 
+classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
+        CellVision3D.Object3D
     % microscope channel 
     % 11/17/2015
     
@@ -34,6 +35,7 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous
                 obj.sizeY=movie.sizeY;
                 obj.sizeX=movie.sizeX;
                 obj.sizeZ=movie.sizeZ;
+                obj.zxr=movie.zxr;
             end
         end
         %grab image
@@ -81,8 +83,11 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous
             data=obj.data;
             obj.data=[];
         end
-        
+        % view projection
         [  ] = viewProjection(obj )
+    end
+    
+    methods( Abstract)
     end
     
 end

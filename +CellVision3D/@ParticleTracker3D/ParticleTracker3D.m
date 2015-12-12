@@ -1,9 +1,9 @@
-classdef ParticleTracker3D < CellVision3D.ParticleTracker
+classdef ParticleTracker3D < CellVision3D.ParticleTracker ...
+    & CellVision3D.Object3D
     % 3d particle tracking
     % use for extracing particle position from given image
     
     properties
-        zxr % zxr ratio
         bordercutz=2; % remove things near border
     end
     
@@ -28,7 +28,6 @@ classdef ParticleTracker3D < CellVision3D.ParticleTracker
     methods (Static)
         bimg=bpass3(img,lnoise,lobj,zxr)
         pks=pkfnd3(img,th,lobj)
-%         [ fmin ,grad] = NGaussian3D2( p,x,y,z,img3,sigdiff,zxr)
         [  ] = plotParticleZstack( img,pk,p,th,zxr,showplot )
     end
     

@@ -1,0 +1,53 @@
+The cellvision3D package contains data classes, function classes, operation classes and ui classes for image analysis for 2d/3d brightfield/fluorescent cell/membrane/particles analysis.
+
+------------------------------------------------------------------------------------------------------------
+HObject class: base handle class for everything, defines universal methods
+
+------------------------------------------------------------------------------------------------------------
+data classes wrap data and contain operations of an object
+classes includes:
+
+movie class: the root class, read data from raw movie file, build channels for each type of imaging
+
+channel class: each channel contains one type of imaging for 2d/3d brightfield/fluorescent cell/membrane/particles analysis.
+
+particle class: contains data for particles, extends to 2d and 3d
+
+contour class: contains data for contours, extends to 2d and 3d
+
+cell class: contains relavent data for a cell, may include particle, membrane etc
+
+
+------------------------------------------------------------------------------------------------------------
+function classes contains no data but groups of related functions
+classes includes:
+
+Image: image process functions, extends into 2D and 3D which override or define specific functions
+
+Fitting: contains different fitting functions
+
+MeshBuilder3D: 3d mesh generation and modification
+
+------------------------------------------------------------------------------------------------------------
+Operation classes define an operation on certain object, contains parameter informations and methods
+classes includes
+
+CellFilter: filter out cells based on different criteria
+
+DiffusionAnalysis: extract diffusion informations from the particles
+
+DriftControl: calcualte drift of the movie, extends to different types
+
+ParticleTracker: extract particle localization from the image/stacks, extends into 2D and 3D
+
+ImageSegmenter: segment image, extends to different specific types
+
+------------------------------------------------------------------------------------------------------------
+UI classes contain ui operations 
+
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
