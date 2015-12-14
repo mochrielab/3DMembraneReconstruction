@@ -24,7 +24,6 @@ classdef UIViewLoadMovie < CellVision3D.UIView
             channel_dy=0.06;
             margin=0.01;
             % moviepath
-            % number of channel selector
             uicontrol('Parent',obj.main_panel,...
                 'Style','text',...
                 'String','movie file name',...
@@ -58,27 +57,9 @@ classdef UIViewLoadMovie < CellVision3D.UIView
             
             % set inital channels
             setChannels(obj.number_channel_selector_handle,[],obj);
-           
-            obj.print('current step ----------------------------');
-            obj.print('');
-            obj.print('Please enter or select the movie to be analyzed');
-            obj.print('');
-            obj.print('Please select number of channels of the movie file');
-            obj.print('');
-            obj.print('Please select the type of each channel');
-            obj.print('Only three types are currently enabled');
-            obj.print('');
-            obj.print('BrightfieldContour3D: cell contours from the brightfield image');
-            obj.print('');
-            obj.print('FluorescentMembrane3D: membrane contours from the fluorescent image');
-            obj.print('');
-            obj.print('FluorescentParticle3D: particle localizations from the fluorescent image');
-            obj.print('');
-            obj.print('Please enter a label of each channel for your reference');
-            obj.print('');
-            obj.print('Next step --------------------------------');
-            obj.print('');
-            obj.print('Load Movie and Initialize movie');
+            
+            % print help message
+            obj.printHelpMessage()
             
             % set channels
             function setChannels(hobj,eventdata,obj)
@@ -136,28 +117,10 @@ classdef UIViewLoadMovie < CellVision3D.UIView
             end
         end
         
-                
-        % go next
-        function varargout=next(obj,varargin)
-            % create movie
-            movie=CellVision3D.Movie(obj.movie_filename_text_handle.get('String'));
-            % number of channels
-            numchannels=obj.number_channel_selector_handle.get('Value');
-            str=[];
-            for ichannel=1:numchannels
-                if ichannel>1
-                    str=[str,','];
-                end
-                str=[str,'''',obj.channel_options{...
-                    get(obj.channel_types_selector_handles(ichannel),'Value')},...
-                    ''',''',get(obj.channel_labels_edit_handles(ichannel),'String'),...
-                    ''''];
-            end
-            % setup channels
-            eval(['movie.setChannels(',str,');']);
-            % output
-            varargout{1}=movie;
-        end
+        
+        % next
+        varargout=next(obj,varargin)
+
     end
     
 end

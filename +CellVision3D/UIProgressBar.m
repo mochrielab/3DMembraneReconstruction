@@ -38,17 +38,25 @@ classdef UIProgressBar < handle
                     'NumberTitle','off','DockControls','off',...
                     'MenuBar','none','ToolBar','none');
                 obj.axes_handle=axes('Position',[0 0 1 1]);
+                set(obj.axes_handle,'Unit','Pixels');
+                obj.size=get(obj.axes_handle,'Positions');
+                set(obj.axes_handle,'Unit','Normalized');
             end
             obj.setPercentage(0);
         end
         
         % show percentage
-        function setPercentage(obj,percentage)
+        function setPercentage(obj,percentage,varargin)
             cla(obj.axes_handle);
             rectangle('Position',[0 0 1 1],'FaceColor',obj.backgroundcolor);
             hold on;
             rectangle('Position',[0,0,percentage,1],...
                 'FaceColor',obj.barcolor,'EdgeColor','none');
+            if nargin>2
+%                 text(obj.size(3)/2-length(varargin{1}),10,varargin{1});
+                text(0.5,.5,varargin{1},'linewidth',2);
+            end
+            drawnow;
         end
         
     end

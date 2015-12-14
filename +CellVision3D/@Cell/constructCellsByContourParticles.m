@@ -1,4 +1,4 @@
-function cells=constructCellsByContoursParticles(contours, varargin)
+function cells=constructCellsByContourParticles(contours, varargin)
 % construct array of cells by the contour
 % merge different particle types together
 

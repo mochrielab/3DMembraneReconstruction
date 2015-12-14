@@ -96,7 +96,9 @@ classdef UIView < CellVision3D.HObject & matlab.mixin.Heterogeneous
         
         % delete
         function delete(obj)
-            close(obj.figure_handle);
+            if ishandle(obj.figure_handle)
+                close(obj.figure_handle);
+            end
         end
 
         

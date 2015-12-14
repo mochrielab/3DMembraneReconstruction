@@ -12,7 +12,11 @@ else
     if nargin==1
         data=bfopen(obj.filein);
     else
-        data=bfopenSelect(obj.filein,varargin{1});
+        if isa(varargin{1},'function_handle')
+            data=bfopen(obj.filein,varargin{:});
+        elseif isa(varargin{1},'numeric')
+            data=bfopenselect(obj.filein,varargin{1});
+        end
     end
     % load
     mov=data{1}(:,1);

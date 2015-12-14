@@ -4,13 +4,8 @@ classdef UINavigation < CellVision3D.HObject
     
     properties
         % views
-%         viewloadmovie=CellVision3D.UIViewLoadMovie.empty;
-%         viewinitialize
-%         viewmerge
-%         viewrun
-%         viewanalysis
-        uiviewclassnames
-        uiview
+        uiviewclassnames % array of unique class names
+        uiview % current ui view
         % listeners
         listener_gonext
     end
@@ -31,21 +26,29 @@ classdef UINavigation < CellVision3D.HObject
             % delete listener
             delete(obj.listener_gonext);
             % set handle to empty
-            meta=metaclass(obj.uiview);
-            classname=meta.Name;
             delete(obj.uiview);
         end
         
         % go to the next View
-        function nextView(obj,sourceObj,sourceData)
-            % find ui name
-            meta=metaclass(sourceObj);
-            classname=meta.Name;
-            % find next uiview
-            id=find(strcmp(obj.uiviewclassnames,classname));
-            obj.unloadView();
-            if id<length(obj.uiviewclassnames)
-                obj.loadView(obj.uiviewclassnames{id+1});
+        function varargout=nextView(obj,sourceObj,sourceData,varargin)
+            try
+                % call the next function from
+                if strcmp(obj.uiview.navigation_next_button.get('String'),'Next')
+                    obj.uiview.navigation_next_button.set('String','Wait Pease...')
+                    [varargout{1:nargout}]=obj.uiview.next(varargin{:});
+                    % find ui name
+                    meta=metaclass(sourceObj);
+                    classname=meta.Name;
+                    % find next uiview
+                    id=find(strcmp(obj.uiviewclassnames,classname));
+                    obj.unloadView();
+                    if id<length(obj.uiviewclassnames)
+                        obj.loadView(obj.uiviewclassnames{id+1});
+                    end
+                end
+            catch error
+                msgbox(error.message,'error');
+                varargout={[],[]};
             end
         end
     end

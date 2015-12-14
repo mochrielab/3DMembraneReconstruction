@@ -1,4 +1,4 @@
-function [result] = bfopen(id)
+function [result] = bfopen(id, varargin)
 % A script for opening microscopy images in MATLAB using Bio-Formats.
 %
 % The function returns a list of image series; i.e., a cell array of cell
@@ -72,6 +72,7 @@ loci.common.DebugTools.enableLogging('INFO');
 % Get the channel filler
 r = bfGetReader(id, stitchFiles);
 
+
 numSeries = r.getSeriesCount();
 result = cell(numSeries, 2);
 for s = 1:numSeries
@@ -140,11 +141,22 @@ for s = 1:numSeries
                 qt = int2str(zct(3) + 1);
                 label = [label, '; ', lt, '=', qt, '/', int2str(sizeT)];
             end
+            
         end
 
         % save image plane and label into the list
         imageList{i, 1} = arr;
         imageList{i, 2} = label;
+        
+        
+        % set a call back function -- added by Yao Zhao
+        %-----------------------------------------------------------
+        if nargin > 1
+            if mod(i,ceil(numImages/100))==0
+                varargin{1}(i/numImages);
+            end
+        end
+        
     end
 
     % extract metadata table for this series

@@ -67,19 +67,13 @@ classdef Movie < CellVision3D.HObject
             end
                         
         end
-        
-
-        
+                
         % basic movie and image
         [ obj ] = setChannels( obj, varargin )
         [ obj ] = load( obj , varargin )
         [ obj ] = getChannel( obj , label )
         [ obj ] = save( obj,isoverride )
-        
-        
-        
-
-        
+                        
         %dependent properties
         function filein=get.filein(obj)
             filein=fullfile(obj.path,[obj.filename,obj.extension]);
