@@ -19,7 +19,7 @@ classdef ChannelFluorescentMembrane3D < CellVision3D.Channel ...
         contours=init(obj,iframe)
         
         % run analysis
-        run(obj,input)
+        run(obj,input,varargin)
         
         % view
         view(obj)

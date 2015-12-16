@@ -3,7 +3,7 @@ classdef CellFilter < CellVision3D.HObject
     % 11/181/2015 Yao Zhao
     
     properties
-        particlenumber % filters for particles of different number
+        FluorescentParticle3D_number % filters for particles of different number
     end
     
     methods

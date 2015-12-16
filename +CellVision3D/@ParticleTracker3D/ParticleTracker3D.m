@@ -28,7 +28,7 @@ classdef ParticleTracker3D < CellVision3D.ParticleTracker ...
     methods (Static)
         bimg=bpass3(img,lnoise,lobj,zxr)
         pks=pkfnd3(img,th,lobj)
-        [  ] = plotParticleZstack( img,pk,p,th,zxr,showplot )
+        [  ] = plotParticleZstack( img,pk,p,th,zxr,showplot,varargin )
     end
     
 end

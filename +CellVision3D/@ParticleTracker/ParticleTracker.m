@@ -5,7 +5,7 @@ classdef ParticleTracker < CellVision3D.HObject
     properties
         lnoise=.5          %   scale of noise
         lobject=5         % scale of object
-        peakthreshold=0.5 % peak finding threshold
+        peakthreshold=0.3 % peak finding threshold
         bordercut=20 % border removal 
         maxdisp=5 % max display
         minsigma=.1   % lower bound of sigma

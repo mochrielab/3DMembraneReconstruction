@@ -1,4 +1,4 @@
-function varargout=next(obj,varargin)
+function next(obj)
 % go next
 % 12/14/2015 Yao Zhao
 
@@ -18,10 +18,22 @@ for ichannel=1:numchannels
 end
 % setup channels
 eval(['movie.setChannels(',str,');']);
+
+% set illuminations
+try
+    for ichannel=1:numchannels
+        channel=movie.getChannel(ichannel);
+        if ~isempty(strfind(lower(channel.type),'fluorescentparticle'))
+            channel.setIlluminationcorrection(movie.path);
+        end
+    end
+catch
+end
+
 % load files
 movie.load(@(i)obj.progress_bar_handle.setPercentage(i,'loading movie...'));
 % output
-varargout{1}=movie;
-varargout{2}=[];
+obj.data.movie=movie;
+
 end
 

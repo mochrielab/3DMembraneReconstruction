@@ -30,6 +30,9 @@ classdef Contour3D < CellVision3D.Contour & CellVision3D.Object3D
         
         % get boundaries
         bb=getBoundaries(obj,varargin)
+        
+        % get centroids
+        cnt=getCentroid(obj,varargin)
     end
     
 end

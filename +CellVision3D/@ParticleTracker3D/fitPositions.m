@@ -43,10 +43,20 @@ param2(:,1:2)=param(:,1:2)+ones(nump,1)*ccnt(1:2)-hs-1;
 % resnorm
 resnorm=sqrt(fval/numel(wimg3))/sqrt(sum(bimg3(:).^2));
 
-for i=1:nargin-3
-    if strcmp(varargin{i},'showplot')
-        obj.plotParticleZstack( bimg3,pcntwindow,param,.2,zxr,.05 )
+
+% 
+showplot=0;
+parent=[];
+for i=1:length(varargin)/2
+    switch lower(varargin{2*i-1})
+        case 'showplot'
+            showplot = varargin{2*i};
+        case 'parent'
+            parent = varargin{2*i};
     end
+end
+if showplot
+    obj.plotParticleZstack( bimg3,pcntwindow,param,.2,zxr,.005,parent );
 end
 
 end

@@ -115,7 +115,21 @@ z=r.*vertices(:,3)/zxr+cnt(3);
 outputpos = [x,y,z];
 
 %% plot all together
-if obj.check(varargin,'showplot')
+showplot=0;
+parent=[];
+for i=1:length(varargin)/2
+    switch lower(varargin{2*i-1})
+        case 'showplot'
+            showplot = varargin{2*i};
+        case 'parent'
+            parent = varargin{2*i};
+    end
+end
+if isempty(parent)
+    parent=figure;
+end
+
+if showplot
     % calculate contour in each plane
     hw=obj.rmax+1;
     wsz=hw*2+1;
@@ -152,10 +166,11 @@ if obj.check(varargin,'showplot')
     options_sphere=optimset('TolX',5e-2,'TolFun',1e-2,'Display','off');
     gaussfit=@(P) CellVision3D.Fitting.AreaSphere(P,stack_z) - area_fit;
     gfit=lsqnonlin(gaussfit,ini_g,lb_g,ub_g,options_sphere);
-    f=figure(103);
-    set(f,'Unit','pixels','Position',[0 50 1000 750]);
-    clf
-    axes('Unit','pixel','Position',[0 400 350 350]);
+%     f=figure(103);
+%     set(f,'Unit','pixels','Position',[0 50 1000 750]);
+%     clf
+    delete(get(parent,'Children'));
+    axes('Parent',parent,'Unit','pixel','Position',[0 400 350 350]);
     pts=[r.*vertices(:,1),r.*vertices(:,2),r.*vertices(:,3)];
     p.vertices=pts;
     p.faces=faces;
@@ -167,14 +182,14 @@ if obj.check(varargin,'showplot')
     camlight
     lighting gouraud
     
-    axes('Unit','pixel','Position',[370 420 310 310]);
+    axes('Parent',parent,'Unit','pixel','Position',[370 420 310 310]);
     neighbors(1:12,6)=(1:12)';
     r_energy=sum((indr(neighbors)-indr*ones(1,6)).^2,2)*cost(1);
     plot(1:length(intensity),intensity,1:length(intensity),r_energy)
     axis([0 length(intensity) 0 65535])
     legend('intensity','bending energy')
     
-    axes('Unit','pixel','Position',[720 420 270 310]);
+    axes('Parent',parent,'Unit','pixel','Position',[720 420 270 310]);
     area=zeros(1,numstacks);
     for i=1:length(area)
         area(i)=contour(i).area;
@@ -192,7 +207,7 @@ if obj.check(varargin,'showplot')
         pc=i-5*pr-1;
         pr=1-pr;
         imgsize=200;
-        axes('Unit','pixel','Position',[pc*imgsize pr*imgsize imgsize imgsize]);
+        axes('Parent',parent,'Unit','pixel','Position',[pc*imgsize pr*imgsize imgsize imgsize]);
         cla;
         stacki=round(cnt(3)-0.5)+(i-5)*floor((numstacks/10)^.7);
         if stacki>=1 && stacki<=numstacks

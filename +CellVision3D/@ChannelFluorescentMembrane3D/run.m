@@ -1,10 +1,11 @@
-function run(obj,input)
+function run(obj,input,varargin)
 % fit cells from the certain frame
 % Yao Zhao 12/11/2015
 if isa(input,'CellVision3D.Contour3D')
     contours=input;
     % create cell contours based on the segmentation
     [vertices,faces,edges,neighbors] = obj.generateMeshSphere(3);
+    index=0;
     for iframe=[1,1,1:obj.numframes]
         tic
         % get image
@@ -12,12 +13,22 @@ if isa(input,'CellVision3D.Contour3D')
         % for the contours belong to current channel
         contours=contours(strcmp(obj.label,{contours.label}));
         % for each cell
+        numcells=length(contours);
         for icell=1:length(contours)
             % fit
             initialpos=contours(icell).tmpvertices;
-            [outputpos] = obj.fitMesh(image3,initialpos,vertices,faces,edges,neighbors,...
-                'noshowplot');
+            if length(varargin)>1
+                [outputpos] = obj.fitMesh(image3,initialpos,vertices,faces,edges,neighbors,...
+                    'showplot',1,'Parent',varargin{2});
+            else
+                [outputpos] = obj.fitMesh(image3,initialpos,vertices,faces,edges,neighbors);
+            end
             contours(icell).addFrame(iframe,outputpos,faces);
+            % call back function
+            if nargin>2
+                varargin{1}(index/(3+obj.numframes)/numcells);
+                index=index+1;
+            end
         end
         toc
     end
@@ -25,6 +36,7 @@ elseif isa(input,'CellVision3D.Cell')
     cells=input;
     % create cell contours based on the segmentation
     [vertices,faces,edges,neighbors] = obj.generateMeshSphere(3);
+    index=0;
     for iframe=[1,1,1:obj.numframes]
         tic
         % get image
@@ -33,13 +45,23 @@ elseif isa(input,'CellVision3D.Cell')
         contours=[cells.membranes];
         contours=contours(strcmp(obj.label,{contours.label}));
         % for each cell
+        numcells=length(contours);
         for icell=1:length(contours)
             % fit
             initialpos=contours(icell).tmpvertices;
-            [outputpos] = obj.fitMesh(image3,initialpos,vertices,faces,edges,neighbors,...
-                'showplot');
+            if length(varargin)>1
+                [outputpos] = obj.fitMesh(image3,initialpos,vertices,faces,edges,neighbors,...
+                    'showplot',1,'Parent',varargin{2});
+            else
+                [outputpos] = obj.fitMesh(image3,initialpos,vertices,faces,edges,neighbors);
+            end
             % save result
             contours(icell).addFrame(iframe,outputpos,faces);
+            % call back function
+            if nargin>2
+                varargin{1}(index/(3+obj.numframes)/numcells);
+                index=index+1;
+            end
         end
         toc
     end

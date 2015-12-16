@@ -3,10 +3,11 @@ classdef UIProgressBar < handle
     % Yao Zhao 12/12/2015
     
     properties
-        axes_handle
+        parent_handle
         size
         barcolor
         backgroundcolor
+        axes_handle
     end
     
     methods
@@ -33,21 +34,25 @@ classdef UIProgressBar < handle
                 obj.barcolor='r';
             end
             % default image
-            if isempty(obj.axes_handle)
-                figure('Position',obj.size,'Name','Progress',...
+            if isempty(obj.parent_handle)
+                obj.parent_handle=...
+                    figure('Position',obj.size,'Name','Progress',...
                     'NumberTitle','off','DockControls','off',...
-                    'MenuBar','none','ToolBar','none');
-                obj.axes_handle=axes('Position',[0 0 1 1]);
-                set(obj.axes_handle,'Unit','Pixels');
-                obj.size=get(obj.axes_handle,'Positions');
-                set(obj.axes_handle,'Unit','Normalized');
+                    'MenuBar','none','ToolBar','none');    
             end
+            obj.axes_handle=axes('Parent',obj.parent_handle,...
+                'Position',[0 0 1 1]);
+            set(obj.axes_handle,'Unit','Pixels');
+            obj.size=get(obj.axes_handle,'Position');
+            set(obj.axes_handle,'Unit','Normalized');
             obj.setPercentage(0);
         end
         
         % show percentage
         function setPercentage(obj,percentage,varargin)
             cla(obj.axes_handle);
+            axes(obj.axes_handle);
+            set(obj.axes_handle,'Unit','Normalized','Position',[0 0 1 1]);
             rectangle('Position',[0 0 1 1],'FaceColor',obj.backgroundcolor);
             hold on;
             rectangle('Position',[0,0,percentage,1],...

@@ -18,7 +18,7 @@ classdef ChannelFluorescentParticle3D < CellVision3D.Channel & ...
         particles=init(obj,i)
         
         % fit particles from the certain frame
-        run(obj,input)
+        run(obj,input,varargin)
         
         % view
         view(obj)

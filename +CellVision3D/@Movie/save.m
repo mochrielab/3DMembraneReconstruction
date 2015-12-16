@@ -1,11 +1,14 @@
-function [ obj ] = save( obj,isoverride )
+function [ movie ] = save( movie,isoverride,varargin )
 % save the result of move file along with cell data
 % varargin can be used to save additional data
 %
 % 3/25/2015
 % Yao Zhao
-
-savefile=fullfile(obj.path,[obj.filename,'.mat']);
+if length(varargin)==0
+    savefile=fullfile(movie.path,[movie.filename,'.mat']);
+elseif length(varargin)==1
+    savefile=varargin{1};
+end
 
 if exist(savefile,'file') && isoverride==0
     choice=questdlg('Do you want to overwrite?',...
@@ -18,13 +21,13 @@ if exist(savefile,'file') && isoverride==0
 end
 
 if isoverride
-    movs=cell(1,obj.numchannels);
-    for i=1:obj.numchannels
-        movs{i}=obj.getChannel(i).unloadData;
+    movs=cell(1,movie.numchannels);
+    for i=1:movie.numchannels
+        movs{i}=movie.getChannel(i).unloadData;
     end
-    save(savefile,'obj');
-    for i=1:obj.numchannels
-        obj.getChannel(i).load(movs{i});
+    save(savefile,'movie');
+    for i=1:movie.numchannels
+        movie.getChannel(i).load(movs{i});
     end
 end
 

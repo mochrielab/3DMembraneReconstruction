@@ -5,7 +5,7 @@ function  cells=applyFilter(obj,cells)
 chooseind=true(size(cells));
 for icell=1:length(cells)
     %% number filters
-    filter=obj.particlenumber;
+    filter=obj.FluorescentParticle3D_number;
     for itype=1:length(filter)
         label=filter(itype).label;
         labels={cells(icell).particles.label};

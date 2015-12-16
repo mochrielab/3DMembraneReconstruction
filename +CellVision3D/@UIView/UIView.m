@@ -20,13 +20,20 @@ classdef UIView < CellVision3D.HObject & matlab.mixin.Heterogeneous
         main_panel
         message_panel
         navigation_panel
+        progress_panel
         % navigation button
         navigation_next_button
+        % data handle
+        data
     end
     
     methods
         % constructor
-        function obj=UIView()
+        function obj=UIView(varargin)
+            % pass data
+            if nargin>0
+                obj.data=varargin{1};
+            end
             % generate figure
             siz=get(0,'ScreenSize');
             obj.screen_size=[0 0+50 siz(3) siz(4)-50];
@@ -55,9 +62,9 @@ classdef UIView < CellVision3D.HObject & matlab.mixin.Heterogeneous
             % help session
             obj.menubar_help_handle=uimenu(obj.figure_handle,'Label','Help');
             % add progress bar
-            axes_handle = axes('Position',[0 0 1 1/50]);
+            obj.progress_panel = uipanel('Position',[0 0 1 1/50]);
             obj.progress_bar_handle = ...
-                CellVision3D.UIProgressBar('axes_handle',axes_handle);
+                CellVision3D.UIProgressBar('parent_handle',obj.progress_panel);
             obj.progress_bar_handle.setPercentage(.0);
             % add panels
             % main

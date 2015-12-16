@@ -13,9 +13,13 @@ classdef UINavigation < CellVision3D.HObject
     methods
         
         % load a view
-        function loadView(obj,uiviewname)
+        function loadView(obj,uiviewname,varargin)
             % load view
-            eval(['obj.uiview=',uiviewname,'();']);
+            if nargin==2
+                eval(['obj.uiview=',uiviewname,'();']);
+            elseif nargin>=3
+                eval(['obj.uiview=',uiviewname,'(varargin{1});']);
+            end
             % add listner to go next
             obj.listener_gonext = ...
                 addlistener(obj.uiview,'goNext',@(hobj,data)obj.nextView(hobj,data));
@@ -30,12 +34,13 @@ classdef UINavigation < CellVision3D.HObject
         end
         
         % go to the next View
-        function varargout=nextView(obj,sourceObj,sourceData,varargin)
+        function nextView(obj,sourceObj,sourceData)
             try
                 % call the next function from
                 if strcmp(obj.uiview.navigation_next_button.get('String'),'Next')
                     obj.uiview.navigation_next_button.set('String','Wait Pease...')
-                    [varargout{1:nargout}]=obj.uiview.next(varargin{:});
+                    obj.uiview.next();
+                    data=obj.uiview.data;
                     % find ui name
                     meta=metaclass(sourceObj);
                     classname=meta.Name;
@@ -43,12 +48,12 @@ classdef UINavigation < CellVision3D.HObject
                     id=find(strcmp(obj.uiviewclassnames,classname));
                     obj.unloadView();
                     if id<length(obj.uiviewclassnames)
-                        obj.loadView(obj.uiviewclassnames{id+1});
+                        obj.loadView(obj.uiviewclassnames{id+1},data);
                     end
                 end
             catch error
                 msgbox(error.message,'error');
-                varargout={[],[]};
+                obj.uiview.navigation_next_button.set('String','Next');
             end
         end
     end

@@ -21,7 +21,7 @@ obj.print('Please enter a label of each channel for your reference');
 obj.print('');
 obj.print('Next step --------------------------------');
 obj.print('');
-obj.print('Load Movie and Initialize movie');
+obj.print('Load Movie');
 
 
 end

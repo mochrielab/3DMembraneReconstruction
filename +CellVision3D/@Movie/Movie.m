@@ -72,7 +72,7 @@ classdef Movie < CellVision3D.HObject
         [ obj ] = setChannels( obj, varargin )
         [ obj ] = load( obj , varargin )
         [ obj ] = getChannel( obj , label )
-        [ obj ] = save( obj,isoverride )
+        [ movie ] = save( movie,isoverride,varargin )
                         
         %dependent properties
         function filein=get.filein(obj)

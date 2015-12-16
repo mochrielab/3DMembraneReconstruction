@@ -1,4 +1,4 @@
-function [  ] = plotParticleZstack( img,pk,p,th,zxr,showplot )
+function [  ] = plotParticleZstack( img,pk,p,th,zxr,showplot,varargin )
 %show slice image of tracked data,
 % pk, initial guess
 % p, fit
@@ -14,11 +14,17 @@ function [  ] = plotParticleZstack( img,pk,p,th,zxr,showplot )
 %     clf
 % end
 
+if length(varargin)>0
+    parent=varargin{1};
+else
+    parent=figure;
+end
+
 cros=[1 0 0; -1 0 0 ; 0 0 0 ; 0 1 0; 0 -1 0; 0 0 0; 0 0 1;0 0 -1]*2;
 th=th*max(img(:));
 for istack=2:size(img,3)
-    clf;
-    subplot(1,2,1)
+    delete(get(parent,'Children'));
+    axes('Parent',parent,'Unit','Normalized','Position',[0 0 1/2 1])
     % plot in that stack
     pksec=pk((pk(:,3))==istack,[1,2]);
     if istack==1
@@ -35,7 +41,7 @@ for istack=2:size(img,3)
     plot(pksec2(:,1),pksec2(:,2),'ro');
     
     % isosurface plot
-    subplot(1,2,2)
+    axes('Parent',parent,'Unit','Normalized','Position',[1/2 0 1/2 1])
     pks=p(p(:,3)<=istack,:);
     v=img(:,:,1:istack);
     pat=patch(isosurface(v,th),'FaceColor','red','EdgeColor','none');
@@ -52,13 +58,13 @@ for istack=2:size(img,3)
         plot3(pks(j,1)+cros(:,1)*pks(j,4),pks(j,2)+cros(:,2)*pks(j,4),...
             pks(j,3)+cros(:,3)*pks(j,4)/zxr,'b','LineWidth',5)
     end
-    %     subplot(2,2,3)
-    set(gca,'nextplot','replacechildren');
-    set(gcf,'Renderer','zbuffer');
+%     subplot(2,2,3)
+%     set(gca,'nextplot','replacechildren');
+%     set(gcf,'Renderer','zbuffer');
     if showplot<1
         pause(showplot)
-    else pause(1)
-        writeVideo(daObj,getframe(gcf));
+%     else pause(1)
+%         writeVideo(daObj,getframe(gcf));
     end
     
 end
