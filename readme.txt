@@ -1,53 +1,54 @@
-The cellvision3D package contains data classes, function classes, operation classes and ui classes for image analysis for 2d/3d brightfield/fluorescent cell/membrane/particles analysis.
+MATLAB Compiler
 
-------------------------------------------------------------------------------------------------------------
-HObject class: base handle class for everything, defines universal methods
+1. Prerequisites for Deployment 
 
-------------------------------------------------------------------------------------------------------------
-data classes wrap data and contain operations of an object
-classes includes:
+. Verify the MATLAB runtime is installed and ensure you    
+  have installed version 8.5 (R2015a).   
 
-movie class: the root class, read data from raw movie file, build channels for each type of imaging
+. If the MATLAB runtime is not installed, do the following:
+  (1) enter
+  
+      >>mcrinstaller
+      
+      at MATLAB prompt. The MCRINSTALLER command displays the 
+      location of the MATLAB runtime installer.
 
-channel class: each channel contains one type of imaging for 2d/3d brightfield/fluorescent cell/membrane/particles analysis.
+  (2) run the MATLAB runtime installer.
 
-particle class: contains data for particles, extends to 2d and 3d
+Or download the Windows 64-bit version of the MATLAB runtime for R2015a 
+from the MathWorks Web site by navigating to
 
-contour class: contains data for contours, extends to 2d and 3d
+   http://www.mathworks.com/products/compiler/mcr/index.html
+   
+   
+For more information about the MATLAB runtime and the MATLAB runtime installer, see 
+Package and Distribute in the MATLAB Compiler documentation  
+in the MathWorks Documentation Center.    
 
-cell class: contains relavent data for a cell, may include particle, membrane etc
+
+NOTE: You will need administrator rights to run MCRInstaller. 
 
 
-------------------------------------------------------------------------------------------------------------
-function classes contains no data but groups of related functions
-classes includes:
+2. Files to Deploy and Package
 
-Image: image process functions, extends into 2D and 3D which override or define specific functions
+Files to package for Standalone 
+================================
+-main.exe
+-MCRInstaller.exe 
+   -if end users are unable to download the MATLAB runtime using the above  
+    link, include it when building your component by clicking 
+    the "Runtime downloaded from web" link in the Deployment Tool
+-This readme file 
 
-Fitting: contains different fitting functions
+3. Definitions
 
-MeshBuilder3D: 3d mesh generation and modification
+For information on deployment terminology, go to 
+http://www.mathworks.com/help. Select MATLAB Compiler >   
+Getting Started > About Application Deployment > 
+Application Deployment Terms in the MathWorks Documentation 
+Center.
 
-------------------------------------------------------------------------------------------------------------
-Operation classes define an operation on certain object, contains parameter informations and methods
-classes includes
 
-CellFilter: filter out cells based on different criteria
 
-DiffusionAnalysis: extract diffusion informations from the particles
 
-DriftControl: calcualte drift of the movie, extends to different types
 
-ParticleTracker: extract particle localization from the image/stacks, extends into 2D and 3D
-
-ImageSegmenter: segment image, extends to different specific types
-
-------------------------------------------------------------------------------------------------------------
-UI classes contain ui operations 
-
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
