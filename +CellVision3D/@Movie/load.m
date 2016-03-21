@@ -33,6 +33,10 @@ else
         obj.vox2um=omeMeta1.getPixelsPhysicalSizeZ(0).getValue();
     catch
         warning('no voxel to um information');
+        query=CellVision3D.UIPopupQuestion(...
+            'Please input the interval between z stacks in microns:');
+        waitfor(query.getFigureHandle);
+        obj.vox2um=str2double(query.getAnswer);
     end
     try
         obj.sizeX=omeMeta1.getPixelsSizeX(0).getValue();
