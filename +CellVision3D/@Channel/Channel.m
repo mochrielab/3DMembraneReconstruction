@@ -85,6 +85,9 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
         end
         % view projection
         [  ] = viewProjection(obj )
+        
+        % check if some parameter doesnt belong to channel
+        array = isNonChannelParam( obj )
     end
     
     methods( Abstract)

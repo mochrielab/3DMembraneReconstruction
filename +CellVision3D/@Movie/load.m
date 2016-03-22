@@ -27,14 +27,21 @@ else
     try
         obj.pix2um=omeMeta1.getPixelsPhysicalSizeY(0).getValue();
     catch
-        warning('no pixel to um information')
+%         warning('no pixel to um information')
+        query=CellVision3D.UIPopupQuestion(...
+            ['Can''t find the pixel information in the metadata',...
+            'Please input the pixel size in microns:']);
+        waitfor(query.getFigureHandle);
+        obj.pix2um=str2double(query.getAnswer);
+
     end
     try
         obj.vox2um=omeMeta1.getPixelsPhysicalSizeZ(0).getValue();
     catch
-        warning('no voxel to um information');
+%         warning('no voxel to um information');
         query=CellVision3D.UIPopupQuestion(...
-            'Please input the interval between z stacks in microns:');
+            ['Can''t find the voxel information in the metadata',...
+            'Please input the interval between z slices in microns:']);
         waitfor(query.getFigureHandle);
         obj.vox2um=str2double(query.getAnswer);
     end

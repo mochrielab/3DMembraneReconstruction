@@ -25,6 +25,8 @@ classdef UIView < CellVision3D.HObject & matlab.mixin.Heterogeneous
         navigation_next_button
         % data handle
         data
+        % setter array handles
+        setter_array_handles
     end
     
     methods
@@ -108,7 +110,13 @@ classdef UIView < CellVision3D.HObject & matlab.mixin.Heterogeneous
             end
         end
 
-        
+        % create parameter setter array
+        displaySetterArray(obj,obj_handles,obj_names,varargin)
+        % clear parameter setter array
+        function clearSetterArray(obj)
+            delete(obj.setter_array_handles);
+            obj.setter_array_handles=[];
+        end
     end
     
     events
