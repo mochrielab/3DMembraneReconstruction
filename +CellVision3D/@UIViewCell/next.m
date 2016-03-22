@@ -23,7 +23,7 @@ constructionmethod=constructionmethods{obj.cell_methods_selector_handle.get('Val
 
 % construct the cell
 switch constructionmethod
-    case 'constructCellsByContourParticles'
+%     case 'constructCellsByContourParticles'
     case 'constructCellsByMembraneParticles'
         if length(membranes)==1 && length(particles)>=1
             cells=CellVision3D.Cell.constructCellsByMembraneParticles...
@@ -32,9 +32,9 @@ switch constructionmethod
             throw(MException('UIViewInit:NotSupported',...
                 'channel numbers doesnt match'))
         end
-    case 'constructCellsByContour'
-    case 'constructCellsByMembrane'
-    case 'constructCellsByParticles'
+%     case 'constructCellsByContour'
+%     case 'constructCellsByMembrane'
+%     case 'constructCellsByParticles'
     otherwise
         cells=[];
         throw(MException('UIViewInit:NotSupported',...
@@ -63,8 +63,9 @@ end
 
 eval(['filter=CellVision3D.CellFilter(',str(1:end-1),');']);
 cells=filter.applyFilter(cells);
-
-cells=cells(1:2);
+% 
+% % for test mode only use the first 2 cells
+% cells=cells(1:2);
 
 % output
 obj.data.cells=cells;

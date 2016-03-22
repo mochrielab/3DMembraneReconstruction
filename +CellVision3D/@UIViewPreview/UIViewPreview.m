@@ -26,7 +26,7 @@ classdef UIViewPreview < CellVision3D.UIView
                 obj.navigation_next_button.set('String','Accept parameters for preview')
                 pause(0.01);
                 % set progress bar
-                obj.progress_bar_handle.setPercentage(i/(numchannels),...
+                obj.progress_bar_handle.setPercentage((2*i-1)/(2*numchannels),...
                     ['initiallizing ',movie.getChannel(i).type,...
                     ' channel: ',movie.getChannel(i).label]);
                 
@@ -55,9 +55,9 @@ classdef UIViewPreview < CellVision3D.UIView
                     pause(0.01);
                     % wait for the figure to close by pressing next channel
                     uiwait(obj.figure_handle)
+                    % delete ax after clicked next
+                    delete(ax);
                 end
-                % delete ax after clicked next
-                delete(ax);
             end
             %
             obj.navigation_next_button.set('String','Next',...

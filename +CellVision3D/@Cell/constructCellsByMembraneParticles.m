@@ -9,7 +9,7 @@ cells=repmat(CellVision3D.Cell.empty,1,numcell);
 % for each cell
 for icell=1:numcell
     cells(icell)=CellVision3D.Cell();
-    cells(icell).membranes=membranes(icell);
+    cells(icell).contours=membranes(icell);
     bb=membranes(icell).getBoundaries(0);
     % for each particle set
     for i=1:nargin-1

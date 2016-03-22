@@ -2,14 +2,14 @@ classdef Contour2D < CellVision3D.Contour
     % basic class for contour analysis
     % Yao Zhao 11/17/2015
     properties (SetAccess = protected)
-        label     % label for the particle
+%         label     % label for the particle
         boundaries % cell type of 
-        dimension % dimension
+%         dimension % dimension
         numframes % number of frames
     end
     
     properties (SetAccess = protected)
-        iframe=0    % current frame
+%         iframe=0    % current frame
         tmpbb % temporary position vector
     end
     

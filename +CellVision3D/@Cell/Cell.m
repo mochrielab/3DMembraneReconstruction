@@ -6,7 +6,7 @@ classdef Cell < CellVision3D.HObject
     properties
         label
         particles
-        membranes
+%         membranes
         contours
     end
     
@@ -22,6 +22,10 @@ classdef Cell < CellVision3D.HObject
         [  ] = plot(cells,iframe,img )
         % get particle labels
         [ labels ] = getParticleLabels( cells )
+        % get contour labels
+        [ labels ] = getContourLabels( cells )
+        % view the result of cells
+        [ ] = view(cells,iframe, image)
     end
     
     methods(Static)

@@ -1,6 +1,14 @@
 classdef Contour3D < CellVision3D.Contour & CellVision3D.Object3D
     % 3d contour class for membrane analysis
+    % data structure:
+    % labe, dimension, zxr, numframes
+    % vertices (cell numframes x 1)
+    % faces (cell numframes x 1)
+    
     % Yao Zhao 11/17/2015
+    
+    
+    
     properties (SetAccess = protected)
         vertices % cell array of vertices of each frame
         faces % cell array of faces of each frame, will be same in this case

@@ -42,7 +42,7 @@ elseif isa(input,'CellVision3D.Cell')
         % get image
         image3=obj.grabImage3D(iframe);
         % for the contours belong to current channel
-        contours=[cells.membranes];
+        contours=[cells.contours];
         contours=contours(strcmp(obj.label,{contours.label}));
         % for each cell
         numcells=length(contours);

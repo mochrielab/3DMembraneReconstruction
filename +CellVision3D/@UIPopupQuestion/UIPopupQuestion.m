@@ -1,6 +1,7 @@
 classdef UIPopupQuestion < CellVision3D.HObject
     % this is a class for popup questions 
     % takes in 1 parameter, the question string
+    % Yao Zhao 3/20/2016
     
     properties (Access=private)
         figure_handle % figure handle

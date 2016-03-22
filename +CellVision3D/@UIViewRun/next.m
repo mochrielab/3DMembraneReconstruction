@@ -1,6 +1,8 @@
 function next(obj)
 % go next
 % 12/14/2015 Yao Zhao
+
+1111111111
 set(obj.navigation_next_button,'String','Please Wait ...');
 for i=1:obj.data.movie.numchannels
     channel=obj.data.movie.getChannel(i);

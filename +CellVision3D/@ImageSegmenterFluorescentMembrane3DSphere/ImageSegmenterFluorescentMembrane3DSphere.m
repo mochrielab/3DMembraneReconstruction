@@ -39,7 +39,8 @@ classdef ImageSegmenterFluorescentMembrane3DSphere < ...
 
                 end
             end
-            % gaussian fit to search for the center of each cell
+            % gaussian fit to search for the center of each cell in the z
+            % stack
             for icell=1:numcells
                 [maxI,maxind]=max(mI(icell,:));
                 init=[maxind,1,maxI];

@@ -1,5 +1,12 @@
 classdef Particle < CellVision3D.HObject
     % basic class for particle analysis
+    % data structure:
+    % label, positions(numframes x dimension), dimensions,
+    % sigmas(numframes x dimension-1), brightness(numframes x 1), 
+    % numframes, resnorm (numframes x 1)
+        
+    
+    
     % Yao Zhao 11/17/2015
     properties (SetAccess = protected)
         label     % label for the particle
