@@ -49,7 +49,11 @@ classdef UINavigation < CellVision3D.HObject
                     obj.unloadView();
                     if id<length(obj.uiviewclassnames)
                         obj.loadView(obj.uiviewclassnames{id+1},data);
-                    end
+                    end   
+                elseif strcmp(obj.uiview.navigation_next_button.get('String'),'Save and Close')
+                    obj.uiview.navigation_next_button.set('String','Wait Pease...')
+                    obj.uiview.next();
+                    obj.unloadView();
                 end
             catch error
                 msgbox(error.message,'error');
