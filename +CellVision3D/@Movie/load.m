@@ -15,7 +15,7 @@ else
         if isa(varargin{1},'function_handle')
             data=bfopen(obj.filein,varargin{:});
         elseif isa(varargin{1},'numeric')
-            data=bfopenselect(obj.filein,varargin{1});
+            data=bfopenSelect(obj.filein,varargin{1});
         end
     end
     % load

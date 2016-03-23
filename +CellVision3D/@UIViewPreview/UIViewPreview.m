@@ -41,7 +41,11 @@ classdef UIViewPreview < CellVision3D.UIView
                 obj.navigation_next_button.set('String','Please Wait ...')
                 pause(0.01);
                 % initialize
-                obj.data.channelresults{i}=movie.getChannel(i).init(1);
+                result = movie.getChannel(i).init(1);
+                obj.data.channelresults{i}= result;
+                if isempty(result)
+                    error('can''t initialize under this parameter set, please check channel information, modify parameters and restart');
+                end
                 % create view for display axes
                 ax=axes('Parent',obj.main_panel,'Position',[0 0 1 1]);
                 movie.getChannel(i).view();

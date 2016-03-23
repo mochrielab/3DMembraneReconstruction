@@ -17,6 +17,8 @@ classdef Fitting < CellVision3D.HObject
         [ energy,grad,intensity,dr ] = ContourEnergy3DSphere(ind,I,cost,rs0,edges,neighbors)
         % fit the area of a sphere
         [ area ] = AreaSphere(P,z)
+        % lorentzian fitting of 1D with background
+        [ fmin, grad, fval ] = Lorentzian1D( p, xarray, yarray )
     end
     
 end

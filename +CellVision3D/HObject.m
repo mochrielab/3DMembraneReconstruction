@@ -5,6 +5,7 @@ classdef HObject < handle
     
     methods
         % parameter setter
+        % override access, should be only used for debugging
         function setParam(obj,varargin)
             n=floor(nargin/2);
             for i=1:n
@@ -12,6 +13,12 @@ classdef HObject < handle
             end
         end
         
+        
+        % get parameter
+        % override access, should be only used for debugging
+        function param = getParam(obj,string)
+            param = obj.(string);
+        end
 
         
         

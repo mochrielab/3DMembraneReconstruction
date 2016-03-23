@@ -34,10 +34,14 @@ classdef UIViewRun < CellVision3D.UIView
                 if ichannel==1
                     img3=zeros([size(img),3]);
                 end
-                img3(:,:,ichannel)=img/max(img(:));
+                img3(:,:,ichannel)=(img-min(img(:)))/(max(img(:))-min(img(:)));
             end
-            obj.data.cells.view(0,img3);
             
+            if obj.data.movie.numchannels>1
+                obj.data.cells.view(0,img3);
+            else 
+                obj.data.cells.view(0,img);
+            end
         end
         
         

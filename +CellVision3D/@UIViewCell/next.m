@@ -33,7 +33,14 @@ switch constructionmethod
                 'channel numbers doesnt match'))
         end
 %     case 'constructCellsByContour'
-%     case 'constructCellsByMembrane'
+    case 'constructCellsByMembrane'
+        if length(membranes)==1 
+            cells=CellVision3D.Cell.constructCellsByMembrane...
+                (membranes{1});
+        else
+            throw(MException('UIViewInit:NotSupported',...
+                'channel numbers doesnt match'))
+        end
 %     case 'constructCellsByParticles'
     otherwise
         cells=[];

@@ -2,17 +2,21 @@ function [outputpos] = fitMesh(obj,image3,initialpos,vertices,faces,edges,neighb
 % fit the mesh with the image
 % input: image3 - image stack
 %        initialpos - initial vertices positions
+%        vertices - sphere vertices
 %        faces - sphere faces
-%        faces - sphere faces
-%        faces - sphere faces
-%        faces - sphere faces
+%        edges - sphere edges
+%        neighbors - sphere neighbors
 %  Yao Zhao 12/11/2015
 
+
+% z x ratio
 zxr=obj.zxr;
 
-% centroids
+% centroids of the mesh
 cnt=(mean(initialpos,1));
 % cnt(3)=gfit(2)/zxr;
+
+% rounded center
 ncnt=round(cnt);
 dcnt=cnt-ncnt;
 %% 3d to 2d img
@@ -26,15 +30,16 @@ rs=obj.rmin:obj.rstep:obj.rmax;
 linearindex=nan(length(initialpos),length(rs),4);
 weights=zeros(length(initialpos),length(rs),4);
 
-%points to be interpolated
-xs=vertices(:,1)*rs+obj.rmax+2+dcnt(1);
-ys=vertices(:,2)*rs+obj.rmax+2+dcnt(2);
-zs=vertices(:,3)*rs/obj.zxr+cnt(3);
+%points to be interpolated, coordinates in subwindow
+xybordersize=1;
+xs=vertices(:,1)*rs+obj.rmax+1+xybordersize+dcnt(1);
+ys=vertices(:,2)*rs+obj.rmax+1+xybordersize+dcnt(2);
+zs=vertices(:,3)*rs/obj.zxr+cnt(3); 
 
 % crop the image
 img=CellVision3D.Image3D.crop(image3,...
-    round([ncnt(2)-obj.rmax-1,ncnt(2)+obj.rmax+1,...
-    ncnt(1)-obj.rmax-1,ncnt(1)+obj.rmax+1,...
+    round([ncnt(2)-obj.rmax-xybordersize,ncnt(2)+obj.rmax+xybordersize,...
+    ncnt(1)-obj.rmax-xybordersize,ncnt(1)+obj.rmax+xybordersize,...
     1,size(image3,3)]));
 
 % correct for z out of range
@@ -51,7 +56,7 @@ for i=zmin:0
 end
 % add slices to top
 zmax=ceil(max(zs(:)));
-for i=11:zmax
+for i=size(image3,3):zmax
     img1=cat(3,img1,img(:,:,end));
 end
 
@@ -111,7 +116,8 @@ r=rs(1)+(indr-1)*(rs(2)-rs(1));
 
 x=r.*vertices(:,1)+cnt(1);
 y=r.*vertices(:,2)+cnt(2);
-z=r.*vertices(:,3)/zxr+cnt(3);
+z=r.*vertices(:,3)/zxr+cnt(3); 
+% z=r.*vertices(:,3)+cnt(3); % not modified to rescale z, 3/23/2016
 outputpos = [x,y,z];
 
 %% plot all together
@@ -125,8 +131,8 @@ for i=1:length(varargin)/2
             parent = varargin{2*i};
     end
 end
-if isempty(parent)
-    parent=figure;
+if isempty(parent) && showplot
+    parent=figure('Unit','Normalized','Position',[0.05 0.05 2/3 2/3]);
 end
 
 if showplot
@@ -156,26 +162,36 @@ if showplot
     for i=1:length(area)
         area(i)=contour(i).area;
     end
-    stack_fit=round((-10:10)/zxr+cnt(3));
+    % range of stack to fit
+    meanradius = mean(r);
+    stack_fit=round((-meanradius:meanradius)/zxr+cnt(3));
     stack_fit=max(1,stack_fit(1)):min(numstacks,stack_fit(end));
+    % areas to fit
     area_fit=area(stack_fit);
+    % scale stack z
     stack_z=stack_fit*zxr;
-    ini_g=[8,cnt(3)*zxr];
+    % init values
+    ini_g=[meanradius,cnt(3)*zxr];
     lb_g=[1,min(stack_z)];
-    ub_g=[15,max(stack_z)];
+    ub_g=[2*meanradius,max(stack_z)];
     options_sphere=optimset('TolX',5e-2,'TolFun',1e-2,'Display','off');
+    % fitting
     gaussfit=@(P) CellVision3D.Fitting.AreaSphere(P,stack_z) - area_fit;
     gfit=lsqnonlin(gaussfit,ini_g,lb_g,ub_g,options_sphere);
 %     f=figure(103);
 %     set(f,'Unit','pixels','Position',[0 50 1000 750]);
 %     clf
+
+    % delete previous
     delete(get(parent,'Children'));
+    % plot 3D shape
     axes('Parent',parent,'Unit','pixel','Position',[0 400 350 350]);
     pts=[r.*vertices(:,1),r.*vertices(:,2),r.*vertices(:,3)];
     p.vertices=pts;
     p.faces=faces;
     patch(p,'FaceColor','red','EdgeColor','black');
-    axis([-15 15 -15 15 -15 15]);
+    plotwinsiz3D = max(r)+1;
+    axis([-1 1 -1 1 -1 1]*plotwinsiz3D);
     grid off
     view(3);
     daspect([1 1 1])
@@ -197,29 +213,34 @@ if showplot
     stack_g=(1:.1:numstacks)*zxr;
     area_g=CellVision3D.Fitting.AreaSphere(gfit,stack_g);
     plot(1:length(area),area,'ob',stack_g/zxr,area_g,'r-');
-    axis([0 numstacks 0 400]);
+    axis([0 numstacks 0 max(area)*1.2]);
     xlabel('stack id');
     ylabel('area (pixel^2)');
     
     % plot ten stacks
-    for i=1:10
+    for i=1:11
+        % set window layouts
         pr=floor((i-1)/5);
         pc=i-5*pr-1;
         pr=1-pr;
         imgsize=200;
         axes('Parent',parent,'Unit','pixel','Position',[pc*imgsize pr*imgsize imgsize imgsize]);
         cla;
-        stacki=round(cnt(3)-0.5)+(i-5)*floor((numstacks/10)^.7);
-        if stacki>=1 && stacki<=numstacks
-            imagesc(img1(:,:,stacki));colormap gray;axis image;
-            xi=contour(stacki).x;
-            yi=contour(stacki).y;
+        % set stack interval
+%         stacki=round(cnt(3)-0.5)+(i-5)*floor((numstacks/10)^.7);
+%         istack = max(1,round(meanradius/zxr/4.5))*(i-6)+round(cnt(3)-.5);
+        istack = max(1,round(numstacks/11))*(i-6)+round(cnt(3)-.5);
+        % plot each stack
+        if istack>=1 && istack<=numstacks
+            imagesc(img1(:,:,istack));colormap gray;axis image;
+            xi=contour(istack).x;
+            yi=contour(istack).y;
             hold on;
             plot(xi,yi,'-','Linewidth',2);
             axis off;
             box on;
-            text(5,3,['Zstack:',num2str(stacki)],'Color','r','FontWeight','bold','FontSize',15);
-            text(5,wsz-3,['Area:',num2str(contour(stacki).area)],'Color','y','FontWeight','bold','FontSize',15);
+            text(5,3,['Zstack:',num2str(istack)],'Color','r','FontWeight','bold','FontSize',15);
+            text(5,wsz-3,['Area:',num2str(contour(istack).area)],'Color','y','FontWeight','bold','FontSize',15);
             if i==1
                 %                 text(5,10,['frame: ',num2str(iframe),' nuclei: ',num2str(inuc)],...
                 %                     'Color','r','FontWeight','bold','FontSize',15);

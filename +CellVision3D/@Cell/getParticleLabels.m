@@ -1,10 +1,14 @@
 function [ labels ] = getParticleLabels( cells )
 %get all possible labels within the cells
 
-labels={};
+
+
+labels=[];
 
 for icell=1:length(cells)
-    labels=[labels,{cells(icell).particles.label}];
+    if ~isempty(cells(icell).particles)
+        labels=[labels,{cells(icell).particles.label}];
+    end
 end
 
 labels=unique(labels);

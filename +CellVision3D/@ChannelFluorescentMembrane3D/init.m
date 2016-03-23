@@ -10,7 +10,13 @@ out=obj.segment(image3,'noshowplot');
 % create cell contours based on the segmentation
 %             [points,faces,edges,neighbors] = CellVision3D...
 %                 .MeshBuilder3DSphere.generateMeshSphere(3);%
-[points,faces,edges,neighbors] = obj.generateMeshSphere(3);
+
+% update the rmin, rmax and rstep automatically
+obj.updateRadiusParam(out);
+
+% create sphere mesh
+[points,faces,edges,neighbors] = obj.generateMeshSphere(obj.ndivision);
+
 % initialize contours
 contours=repmat(CellVision3D.Contour3D.empty,1,length(out));
 % assign values for each contour
@@ -18,9 +24,11 @@ for i=1:length(out)
     contours(i)=CellVision3D.Contour3D(obj.label,obj.numframes,...
         points*sqrt(out(i).Area/pi).*...
         (ones(size(points,1),1)*[1 1 1/obj.zxr])+...
-        ones(size(points,1),1)*out(i).Centroid,...
+        ones(size(points,1),1)*(out(i).Centroid.*[1 1 1]),...
         faces,obj.zxr);
 end
+
+
 % save contours to it self
 obj.contours=contours;
 end

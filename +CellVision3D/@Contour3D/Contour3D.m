@@ -10,7 +10,8 @@ classdef Contour3D < CellVision3D.Contour & CellVision3D.Object3D
     
     
     properties (SetAccess = protected)
-        vertices % cell array of vertices of each frame
+        vertices % cell array of vertices of each frame, 
+        % coordinates is in xyz, not correct for zxr
         faces % cell array of faces of each frame, will be same in this case
 %         centroids % centroid of the analysis
     end

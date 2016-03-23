@@ -1,5 +1,6 @@
 function run(obj,input,varargin)
 % fit cells from the certain frame
+% varargin{1} accept call back function to excute at the end of each cycle
 % Yao Zhao 12/11/2015
 
 if ~isempty(input) %% if input is not empty
@@ -7,7 +8,7 @@ if ~isempty(input) %% if input is not empty
     if isa(input,'CellVision3D.Contour3D')
         contours=input;
         % create cell contours based on the segmentation
-        [vertices,faces,edges,neighbors] = obj.generateMeshSphere(3);
+        [vertices,faces,edges,neighbors] = obj.generateMeshSphere(obj.ndivision);
         index=0;
         for iframe=[1,1,1:obj.numframes]
             tic
@@ -38,7 +39,7 @@ if ~isempty(input) %% if input is not empty
     elseif isa(input,'CellVision3D.Cell')
         cells=input;
         % create cell contours based on the segmentation
-        [vertices,faces,edges,neighbors] = obj.generateMeshSphere(3);
+        [vertices,faces,edges,neighbors] = obj.generateMeshSphere(obj.ndivision);
         index=0;
         for iframe=[1,1,1:obj.numframes]
             tic

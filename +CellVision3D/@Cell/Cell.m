@@ -39,13 +39,14 @@ classdef Cell < CellVision3D.HObject
         cells=constructCellsByMembrane(membranes)
         %
         cells=constructCellsByParticles(varargin)
-
+        
         % get cell construction methods
         function [constructionmethods,descriptions]=getCellConstructionMethods()
             constructionmethods=methods(CellVision3D.Cell);
             constructionmethods=constructionmethods...
                 (cellfun(@(x)~isempty(strfind(x,'constructCellsBy')),constructionmethods));
-            descriptions=[];
+            constructionmethods=['none';constructionmethods];
+            descriptions=[{'none'}];
             for i=1:length(constructionmethods)
                 switch constructionmethods{i}
                     case 'constructCellsByContourParticles'

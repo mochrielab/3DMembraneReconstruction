@@ -1,10 +1,12 @@
 function [ labels ] = getContourLabels( cells )
 %get all possible labels within the cells
 
-labels={};
+labels=[];
 
 for icell=1:length(cells)
-    labels=[labels,{cells(icell).contours.label}];
+    if ~isempty(cells(icell).contours)
+        labels=[labels,{cells(icell).contours.label}];
+    end
 end
 
 labels=unique(labels);
