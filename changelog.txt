@@ -11,3 +11,8 @@
 			added script example for sample cases
 			split the Cell class into Cell and CellConstructor class
 			cleaned up the function name to put everything in folders
+
+3/24/2016   add math package
+            add geometry class in the math package to hold geometry related functions
+            add getDistance, getPointsClusterSize, groupPoints
+            * use recursion for groupPoints

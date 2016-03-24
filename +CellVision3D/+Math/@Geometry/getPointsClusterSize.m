@@ -1,33 +1,33 @@
-function [ cells ] = constructCellsByParticles( varargin )
-% construct array of cells only by particles
-% find nearby particles and group them together to form cells
+function [ th ] = getPointsClusterSize( peaks,varargin )
+% find a distance threshold to split a set of points that have some
+% inherete grouping
+% can be used to group same fluorescent particles that belong to the same
+% cell
+% this is a binary threshold that split the double log histogram of pair
+% distance
+% 3/24/2016 Yao Zhao
 
-%%
-numParticleChannels = length(varargin);
-
-
-% group all cells together
-
-% for each particle set
-peaks=[];
-for i=1:numParticleChannels
-    particles=varargin{i};
-    % for each particle channel append peaks, add channel label
-    tmp=particles.getCentroid;
-    peaks=[peaks;tmp,zeros(size(tmp,1),1)+i];
+% set the z to x ratio
+if nargin ==1
+    zxr=1;
+elseif nargin ==2
+    zxr = varargin{1};
+else
 end
+
 
 % get the distance between each 2 particles
 numparticles=size(peaks,1);
-d2=zeros(numparticles);
+d2mat=zeros(numparticles);
 for i=1:numparticles
     for j=1:numparticles
-        d2(i,j)=sqrt(sum((peaks(i,1:3)-peaks(j,1:3)).^2));
+        d2mat(i,j)=CellVision3D.Math.Geometry.getDistance...
+            (peaks(i,:),peaks(j,:),zxr);
     end
 end
 
 % calculate the log distance
-d2=d2(:);
+d2=d2mat(:);
 logd2=log(d2(d2>0));
 
 % calculate the distribution
@@ -51,25 +51,24 @@ p=fmincon(@(p)CellVision3D.Fitting.NGaussian1D0B(p,bins,logcounts),...
     ini,[],[],[],[],...
     lb,ub,@(p)lncon(p),options);
 
+    function [ c, ceq] = lncon(p)
+        c=p(1,1)-p(2,1);
+        ceq=0;
+    end
 
 % get fitted curve
 [~,~,fval]=CellVision3D.Fitting.NGaussian1D0B(p,bins,logcounts);
 
 % find the value that is the smallest between peaks
 dbins=bins(2)-bins(1);
-[~, thlogd2] = min(fval(ceil((p(1,1)-bins(1))/dbins):floor((p(2,1)-bins(1))/dbins)));
-threshold = exp(bins)
+startbin=ceil((p(1,1)-bins(1))/dbins);
+endbin=floor((p(2,1)-bins(1))/dbins);
+[~, thlogd2] = min(fval(startbin:endbin));
+th = exp(bins(thlogd2+startbin));
 
-% plot fitting result
-bar(bins,logcounts); hold on;
-plot(bins,fval,'linewidth',2);
-
-numP=1
-
+% % plot fitting result
+% bar(bins,logcounts); hold on;
+% plot(bins,fval,'linewidth',2);
 
 end
-    function [ c, ceq] = lncon(p)
-        c=p(1,1)-p(2,1);
-        ceq=0;
-    end
 

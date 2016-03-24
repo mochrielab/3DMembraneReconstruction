@@ -28,6 +28,7 @@ channel.mindist = 3;
 channel.view();
 %% construct cell 
 % construct the cell only by membrane
+clc
 cells = CellVision3D.CellConstructor.constructCellsByParticles(results);
 %% analyze cell
 channel.run(cells,@(x)1,[]);
