@@ -1,0 +1,27 @@
+% script for er testing
+% this is a script example to show how to analyze er labeing using script
+
+
+%% setting up and load movie
+% select movie file
+movie=CellVision3D.Movie('sample_image_er.dv');
+% set channels
+movie.setChannels('FluorescentParticle3D','lacO','FluorescentMembrane3D','ER');
+% load movie to RAM
+movie.load();
+%% initialize channel
+% get channel
+channel1 = movie.getChannel('lacO');
+% initialize the channel 
+particles = channel1.init(1);
+% show result
+channel1.view();
+%% 
+channel2 = movie.getChannel('ER');
+contours = channel2.init
+%% construct cell 
+% construct the cell only by membrane
+cells = CellVision3D.Cell.constructCellsByMembrane(contours);
+%% analyze cell
+% run the analysis based on constructed cells
+channel.run(cells,@(x)1,[]);

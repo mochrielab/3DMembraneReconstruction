@@ -70,6 +70,8 @@ classdef Movie < CellVision3D.HObject
         
         % preview movie
         view(obj,varargin);
+        % run movie analysis
+%         run(obj, varargin);
                 
         % basic movie and image
         [ obj ] = setChannels( obj, varargin )
