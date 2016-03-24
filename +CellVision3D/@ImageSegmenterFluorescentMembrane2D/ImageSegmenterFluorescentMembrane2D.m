@@ -6,6 +6,7 @@ classdef ImageSegmenterFluorescentMembrane2D < CellVision3D.ImageSegmenter
     properties
         lobject=30 %length of the object
         lnoise=1  % scale of the noise
+        ncycles=1 % number of cycles to search for global mininum for canny edge segmentation
     end
     
     methods

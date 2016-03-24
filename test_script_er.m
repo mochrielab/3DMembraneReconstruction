@@ -22,8 +22,13 @@ channel1.view();
 channel2 = movie.getChannel('ER');
 % initialize ER channel
 contours = channel2.init(1);
+% set the size of the object
 channel2.lobject = 20;
+% set the noise smoothing level
 channel2.lnoise = .5;
+% increase cycle number to search for global mininum, take longer but
+% more robust result
+channel2.ncycles = 20; 
 % preview channel
 channel2.view();
 %% construct cell 

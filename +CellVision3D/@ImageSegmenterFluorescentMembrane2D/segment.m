@@ -13,7 +13,7 @@ im=Image2D.removeLinearBackground(im);
 bimg=Image2D.bpass(im,lnoise,lobject);
 
 % create an array of parameters
-numinit = 20;
+numinit = obj.ncycles;
 th_array = zeros(numinit,2);
 fmin_array = zeros(numinit,1);
 
