@@ -18,7 +18,7 @@ membranes=obj.data.channelresults(strcmp(types,'FluorescentMembrane3D'));
 particles=obj.data.channelresults(strcmp(types,'FluorescentParticle3D'));
 
 % get the construction method of cell
-[constructionmethods,descriptions]=CellVision3D.CellConstructor.getCellConstructionMethods;
+[constructionmethods,descriptions]=CellVision3D.Cell.getCellConstructionMethods;
 constructionmethod=constructionmethods{obj.cell_methods_selector_handle.get('Value')};
 
 % construct the cell
@@ -29,7 +29,7 @@ switch constructionmethod
     case 'constructCellsByMembraneParticles'
         %%
         if length(membranes)==1 && length(particles)>=1
-            cells=CellVision3D.CellConstructor.constructCellsByMembraneParticles...
+            cells=CellVision3D.Cell.constructCellsByMembraneParticles...
                 (membranes{1},particles{:});
         else
             throw(MException('UIViewInit:NotSupported',...
@@ -39,7 +39,7 @@ switch constructionmethod
     case 'constructCellsByMembrane'
         %%
         if length(membranes)==1 
-            cells=CellVision3D.CellConstructor.constructCellsByMembrane...
+            cells=CellVision3D.Cell.constructCellsByMembrane...
                 (membranes{1});
         else
             throw(MException('UIViewInit:NotSupported',...
@@ -50,7 +50,7 @@ switch constructionmethod
         %%
         % pass multiple cell values to the function
         if length(particles)>=1
-            cells=CellVision3D.CellConstructor.constructCellsByParticles(particles{:});
+            cells=CellVision3D.Cell.constructCellsByParticles(particles{:});
         else
             throw(MException('UIViewInit:NotSupported',...
                 'channel numbers doesnt match'))

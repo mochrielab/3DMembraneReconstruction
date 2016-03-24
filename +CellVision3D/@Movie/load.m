@@ -5,19 +5,23 @@ function [ obj ]=load(obj,varargin)
 
 if ~exist(obj.filein,'file')
     warning('invalid movie data path');
+    
+    
 else
-    
-    
     % ui select
+    isUI=0;
     if nargin==1
         data=bfopen(obj.filein);
     else
         if isa(varargin{1},'function_handle')
             data=bfopen(obj.filein,varargin{:});
+            isUI=1;
         elseif isa(varargin{1},'numeric')
             data=bfopenSelect(obj.filein,varargin{1});
         end
     end
+    
+    
     % load
     mov=data{1}(:,1);
     %     obj.fformat=data{1}(:,2);
@@ -27,23 +31,28 @@ else
     try
         obj.pix2um=omeMeta1.getPixelsPhysicalSizeY(0).getValue();
     catch
-%         warning('no pixel to um information')
-        query=CellVision3D.UIPopupQuestion(...
-            ['Can''t find the pixel information in the metadata',...
-            'Please input the pixel size in microns:']);
-        waitfor(query.getFigureHandle);
-        obj.pix2um=str2double(query.getAnswer);
-
+        if isUI
+            query=CellVision3D.UIPopupQuestion(...
+                ['Can''t find the pixel information in the metadata',...
+                'Please input the pixel size in microns:']);
+            waitfor(query.getFigureHandle);
+            obj.pix2um=str2double(query.getAnswer);
+        else
+            warning('no pixel to um information')
+        end
     end
     try
         obj.vox2um=omeMeta1.getPixelsPhysicalSizeZ(0).getValue();
     catch
-%         warning('no voxel to um information');
-        query=CellVision3D.UIPopupQuestion(...
-            ['Can''t find the voxel information in the metadata',...
-            'Please input the interval between z slices in microns:']);
-        waitfor(query.getFigureHandle);
-        obj.vox2um=str2double(query.getAnswer);
+        if isUI
+            query=CellVision3D.UIPopupQuestion(...
+                ['Can''t find the voxel information in the metadata',...
+                'Please input the interval between z slices in microns:']);
+            waitfor(query.getFigureHandle);
+            obj.vox2um=str2double(query.getAnswer);
+        else
+            warning('no voxel to um information');
+        end
     end
     try
         obj.sizeX=omeMeta1.getPixelsSizeX(0).getValue();

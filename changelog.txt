@@ -1,0 +1,13 @@
+1.3 Version
+3/22/2016   added parameter selection panel as function for UIView
+			added the option for cell to plot all channels together
+
+3/23/2016 	* use lorentzian function for z center searching for spherical fluorescent membrane
+			* use pair distance log scale double gaussian fitting to group particles to decide which particles belong to the same cell
+			fixed the zscale problem in intialize fluorescent membrane shape
+			fixed that GUI won't alow 'None' channel, "None" channel only holds channel data, do not start any analysis
+			changed that the question box for missing values only popup in GUI mode
+			replaced the varaible name 'maxdisp' under ParticleTracker3D with 'mindist'
+			added script example for sample cases
+			split the Cell class into Cell and CellConstructor class
+			cleaned up the function name to put everything in folders

@@ -21,6 +21,11 @@ classdef UIViewPreview < CellVision3D.UIView
             movie=obj.data.movie;
             numchannels=movie.numchannels;
             for i=1:numchannels
+                % skip if the channel is empty
+                if strcmp(movie.getChannel(i).type,'None')
+                    continue;
+                end
+                
                 %% set input parameters
                 % update buttion text
                 obj.navigation_next_button.set('String','Accept parameters for preview')

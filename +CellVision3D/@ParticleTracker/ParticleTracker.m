@@ -7,7 +7,7 @@ classdef ParticleTracker < CellVision3D.HObject
         lobject=5         % scale of object
         peakthreshold=0.3 % peak finding threshold
         bordercut=20 % border removal 
-        maxdisp=5 % max display
+        mindist=5 % minimum distance between peaks
         minsigma=.1   % lower bound of sigma
         maxsigma=10   % upper bound of sigma
         minpeak=.1 % min brightness ratio

@@ -3,7 +3,7 @@ classdef UIViewLoadMovie < CellVision3D.UIView
     % Yao Zhao 12/12/2015
     
     properties (Constant)
-        channel_options={'none','BrightfieldContour3D','FluorescentMembrane3D',...
+        channel_options={'None','BrightfieldContour3D','FluorescentMembrane3D',...
             'FluorescentParticle3D'};
     end
     properties
