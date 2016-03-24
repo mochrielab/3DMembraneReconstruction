@@ -29,19 +29,7 @@ classdef UIViewRun < CellVision3D.UIView
             obj.printHelpMessage;
             
             % plot preview
-            for ichannel=1:min(3,obj.data.movie.numchannels)
-                img=obj.data.movie.getChannel(1).grabProjection(1);
-                if ichannel==1
-                    img3=zeros([size(img),3]);
-                end
-                img3(:,:,ichannel)=(img-min(img(:)))/(max(img(:))-min(img(:)));
-            end
-            
-            if obj.data.movie.numchannels>1
-                obj.data.cells.view(0,img3);
-            else 
-                obj.data.cells.view(0,img);
-            end
+            obj.data.movie.view(obj.data.cells);
         end
         
         

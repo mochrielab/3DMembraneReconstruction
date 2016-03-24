@@ -2,6 +2,7 @@ function cells=constructCellsByContourParticles(contours, varargin)
 % construct array of cells by the contour
 % merge different particle types together
 
+
 % initalizetion
 numcell=length(contours);
 cells=repmat(CellVision3D.Cell.empty,1,numcell);

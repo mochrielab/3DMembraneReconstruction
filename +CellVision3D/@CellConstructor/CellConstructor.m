@@ -1,4 +1,4 @@
-classdef CellConstructor
+classdef CellConstructor < CellVision3D.HObject
     % methods to construct cells based on different types of data inputs
     properties
     end
@@ -17,6 +17,7 @@ classdef CellConstructor
         cells=constructCellsByMembrane(membranes)
         %
         cells=constructCellsByParticles(varargin)
+        %
         
         % get cell construction methods
         function [constructionmethods,descriptions]=getCellConstructionMethods()

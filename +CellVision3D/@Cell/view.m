@@ -38,6 +38,7 @@ for icell=1:length(cells)
         for i=1:size(cnt,1)
             plot(cnt(i,1),cnt(i,2),'o','LineWidth',2,'Color',colors(strcmp(labeltmp{i},particlelabels),:));hold on;
         end
+        plot(cnt(:,1),cnt(:,2),'-','LineWidth',1.5,'Color','w');hold on;
     end
 end
 

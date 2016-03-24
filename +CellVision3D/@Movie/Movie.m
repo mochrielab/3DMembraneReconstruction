@@ -67,6 +67,9 @@ classdef Movie < CellVision3D.HObject
             end
                         
         end
+        
+        % preview movie
+        view(obj,varargin);
                 
         % basic movie and image
         [ obj ] = setChannels( obj, varargin )

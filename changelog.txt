@@ -16,3 +16,4 @@
             add geometry class in the math package to hold geometry related functions
             add getDistance, getPointsClusterSize, groupPoints
             * use recursion for groupPoints
+            added constructCellByParticles, automatically group particles

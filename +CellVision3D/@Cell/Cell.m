@@ -4,10 +4,10 @@ classdef Cell < CellVision3D.HObject
     % 11/17/Yao
     
     properties
-        label
-        particles
-%         membranes
-        contours
+        label % user info
+        type % cell type, will be specified by its constructor
+        particles % particles for each cell
+        contours % contours for each cell, membrane types are included
     end
     
     methods
