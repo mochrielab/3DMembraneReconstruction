@@ -73,9 +73,7 @@ classdef UIViewPreview < CellVision3D.UIView
                 'CallBack',@(hobj,eventdata)notify(obj,'goNext'));
         end
         
-        % next
-        function next(obj)
-        end
+
     end
     
 end

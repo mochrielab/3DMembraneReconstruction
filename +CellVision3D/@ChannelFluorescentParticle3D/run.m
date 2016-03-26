@@ -35,7 +35,9 @@ if isa(input,'CellVision3D.Cell')
             end
             % call back function
             if nargin>2
-                varargin{1}(((iframe-1)*numcells+icell)/(obj.numframes)/numcells);
+                if ~isempty(varargin{1})
+                    varargin{1}(((iframe-1)*numcells+icell)/(obj.numframes)/numcells);
+                end
             end
         end
         display(['frame processed ',num2str(iframe)])

@@ -1,9 +1,10 @@
 classdef HObject < handle
     %base class template for everything
-    properties
+    properties (Access = private)
     end
     
     methods
+        
         % parameter setter
         % override access, should be only used for debugging
         function setParam(obj,varargin)
@@ -19,7 +20,6 @@ classdef HObject < handle
         function param = getParam(obj,string)
             param = obj.(string);
         end
-
         
         
     end

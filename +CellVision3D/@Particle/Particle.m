@@ -1,4 +1,4 @@
-classdef Particle < CellVision3D.HObject
+classdef Particle < CellVision3D.HObject & CellVision3D.UserData
     % basic class for particle analysis
     % data structure:
     % label, positions(numframes x dimension), dimensions,

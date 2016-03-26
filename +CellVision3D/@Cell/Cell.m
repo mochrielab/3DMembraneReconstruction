@@ -1,4 +1,4 @@
-classdef Cell < CellVision3D.HObject
+classdef Cell < CellVision3D.HObject & CellVision3D.UserData
     % cell class
     % wrapper for the data of each cell
     % 11/17/Yao

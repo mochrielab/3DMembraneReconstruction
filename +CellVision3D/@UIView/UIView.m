@@ -112,10 +112,15 @@ classdef UIView < CellVision3D.HObject & matlab.mixin.Heterogeneous
 
         % create parameter setter array
         displaySetterArray(obj,obj_handles,obj_names,varargin)
+        
         % clear parameter setter array
         function clearSetterArray(obj)
             delete(obj.setter_array_handles);
             obj.setter_array_handles=[];
+        end
+        
+        % go next
+        function next(obj)
         end
     end
     

@@ -118,9 +118,6 @@ classdef UIViewLoadMovie < CellVision3D.UIView
         end
         
         
-        % next
-        next(obj)
-
     end
     
 end

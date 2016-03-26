@@ -1,4 +1,4 @@
-classdef Contour < matlab.mixin.Heterogeneous & CellVision3D.HObject
+classdef Contour < matlab.mixin.Heterogeneous & CellVision3D.HObject & CellVision3D.UserData
     %   base contour class
     % 11/22/2015 Yao Zhao
     

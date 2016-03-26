@@ -1,5 +1,6 @@
 classdef UIViewFinish < CellVision3D.UIView
-    % uiview run individual channels
+    % uiview finish
+    % pop a window to save the result
     % Yao Zhao 12/12/2015
     
     
@@ -53,6 +54,7 @@ classdef UIViewFinish < CellVision3D.UIView
 %             end
 
         end
+        
         
     end
     

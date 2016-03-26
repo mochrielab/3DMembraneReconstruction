@@ -37,8 +37,18 @@ filter=CellVision3D.CellFilter(channellabel,'FluorescentParticle3D_number',[2 2]
 cells=filter.applyFilter(cells);
 % view result
 movie.view(cells);
-%% analyze cell
-f=figure
-channel.run(cells,@(x)1,f);
-% run the analysis based on constructed cells
-% channel.run(cells)
+%% reconstruct cell
+cells=cells(1:2); % only choose first 2 cells to make it faster for testing
+f=figure;
+channel.run(cells,[],f);
+%% run the analysis based on constructed cells
+% run particle distance analysis
+CellVision3D.CellAnalyzer.extractParticlePairDistance(cells,'lacO')
+
+%%
+data.movie=movie;
+data.cells=cells;
+ui=CellVision3D.UIViewAnalyze(data);
+
+% ui.next();
+
