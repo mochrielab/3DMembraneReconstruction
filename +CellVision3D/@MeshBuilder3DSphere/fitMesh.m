@@ -6,6 +6,7 @@ function [outputpos] = fitMesh(obj,image3,initialpos,vertices,faces,edges,neighb
 %        faces - sphere faces
 %        edges - sphere edges
 %        neighbors - sphere neighbors
+% outputpos: vertices of the fit result (image position, not scaled by zxr)
 %  Yao Zhao 12/11/2015
 
 

@@ -1,8 +1,8 @@
 % script for er testing
 % this is a script example to show how to analyze the default sample
 
-clear all;clc;close all
 %% setting up and load movie
+clear all;clc;close all
 % select movie file
 movie=CellVision3D.Movie('sample_image.dv');
 % set channels
@@ -29,8 +29,20 @@ channel2.view();
 cells = CellVision3D.CellConstructor.constructCellsByMembraneParticles(contours,particles);
 % view the movie
 movie.view(cells);
-%% analyze cell
+%% reconstruct the cells
+%only choose the first two cells to for test purpose
+cells=cells(1:2);
 % run the analysis based on constructed cells
 f=figure;
 channel1.run(cells,@(x)1,f);
 channel2.run(cells,@(x)1,f);
+%% analyze the cells
+CellVision3D.CellAnalyzer.extractParticleContourDistance(cells,'lacO','cut11');
+
+%%
+% data.movie=movie;
+% data.cells=cells;
+% ui=CellVision3D.UIViewAnalyze(data);
+% 
+% ui.next();
+% 

@@ -45,10 +45,10 @@ channel.run(cells,[],f);
 % run particle distance analysis
 CellVision3D.CellAnalyzer.extractParticlePairDistance(cells,'lacO')
 
-%%
-data.movie=movie;
-data.cells=cells;
-ui=CellVision3D.UIViewAnalyze(data);
+% %%
+% data.movie=movie;
+% data.cells=cells;
+% ui=CellVision3D.UIViewAnalyze(data);
 
 % ui.next();
 

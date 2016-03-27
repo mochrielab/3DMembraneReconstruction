@@ -7,7 +7,7 @@ classdef UserData < handle
     end
     
     methods
-                % set userdata struct
+        % set userdata struct
         function setUserData (objs, fieldname, data)
             for iobj=1:numel(objs)
                 objs(iobj).userdata.(fieldname)=data;
@@ -21,7 +21,7 @@ classdef UserData < handle
                 datafields{iobj}=objs(iobj).userdata.(fieldname);
             end
         end
- 
+        
         % remove userdata struct
         function removeUserData(objs,fieldname)
             for iobj=1:numel(objs)
@@ -31,10 +31,15 @@ classdef UserData < handle
         
         % get userdata fields
         function fields=getUserDataFieldNames (objs)
+            
             fields=[];
-            for iobj=1:numel(objs)
-%                 ifieldnames = fieldnames(objs(iobj));
-                fields=unique([fields,fieldnames(objs(iobj).userdata)]);
+            if ~isempty(objs)
+                for iobj=1:numel(objs)
+                    %                 ifieldnames = fieldnames(objs(iobj));
+                    if ~isempty(objs(iobj).userdata)
+                        fields=unique([fields,fieldnames(objs(iobj).userdata)]);
+                    end
+                end
             end
         end
     end

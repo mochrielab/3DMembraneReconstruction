@@ -26,6 +26,8 @@ classdef Cell < CellVision3D.HObject & CellVision3D.UserData
         [ labels ] = getContourLabels( cells )
         % view the result of cells
         [ ] = view(cells,iframe, image)
+        %function
+        exportCSV(cells,filename);
     end
     
 

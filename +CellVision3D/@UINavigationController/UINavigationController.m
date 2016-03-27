@@ -4,10 +4,10 @@ classdef UINavigationController < CellVision3D.UINavigation
     
     properties
         
-        % data
-        movie
-        cells
-        channelresults
+%         % data
+%         movie
+%         cells
+%         channelresults
     end
     
     methods
@@ -17,6 +17,7 @@ classdef UINavigationController < CellVision3D.UINavigation
                 'CellVision3D.UIViewPreview',...
                 'CellVision3D.UIViewCell',...
                 'CellVision3D.UIViewRun',...
+                'CellVision3D.UIViewAnalyze',...
                 'CellVision3D.UIViewFinish'};
             obj.loadView(obj.uiviewclassnames{1});
         end

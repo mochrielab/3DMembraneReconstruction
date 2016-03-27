@@ -12,6 +12,8 @@ classdef Geometry < CellVision3D.HObject
         [ groups ] = groupPoints( p, th, options, varargin )
         % get the cluster size of a set of points
         [ th ] = getPointsClusterSize( peaks,varargin )
+        % get the shortest dinstance from a set of points to the surface
+        [ d ] = getPointSurfaceDistance( points, vertices, faces, varargin )
     end
     
 end

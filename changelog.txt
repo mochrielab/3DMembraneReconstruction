@@ -27,4 +27,5 @@
 3/26/2016   added analysis UI: UIViewAnalysis
             added analysis module: CellAnalyzer
             added CellAnalyzer method: extractParticlePairDistance
-
+            added CellAnalyzer method: extractParitcleContourDistance
+            add export to excel

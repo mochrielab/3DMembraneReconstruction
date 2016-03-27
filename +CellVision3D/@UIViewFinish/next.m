@@ -18,6 +18,8 @@ try
     obj.data.movie.save(1,fullfile(PathName,FileName));
     cells=obj.data.cells;
     save(fullfile(PathName,FileName),'cells','-append');
+    [~,filename,~]=fileparts(FileName);
+    cells.exportCSV(fullfile(PathName,[filename,'.csv']));
 catch error
     msgbox(error.message);
 end

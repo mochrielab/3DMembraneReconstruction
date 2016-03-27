@@ -24,7 +24,7 @@ classdef HObject < handle
         
     end
     
-    methods (Static)
+    methods (Static, Access = public)
                 % search for string
         function found=check(strings,string)
             found=false;
