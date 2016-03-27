@@ -19,7 +19,7 @@ classdef CellAnalyzer < CellVision3D.HObject
         % get distance between particles and cell contour
         extractParticleContourDistance(cells,particlechannellabel,contourchannellabel)
         % get distance between particles
-        extractParticleParticleDistance(cells,channellabel)
+%         extractParticleParticleDistance(cells,channellabel)
         % get methods info
         [analysismethods,descriptions,inputformats]=getCellAnalysisMethods()
         

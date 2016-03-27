@@ -14,7 +14,7 @@ classdef CellConstructor < CellVision3D.HObject
         %
         cells=constructCellsByContour(membranes)
         %
-        cells=constructCellsByMembrane(membranes)
+%         cells=constructCellsByMembrane(membranes)
         %
         cells=constructCellsByParticles(varargin)
         %

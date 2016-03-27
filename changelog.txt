@@ -22,10 +22,14 @@
             # second method of groupPoints not applied
             added constructCellByParticles, automatically group particles
             added script for ER membrane
-            * randomized set intial parameters for canny edge filter to search global minimum
+            * randomized set intial parameters for canny edge filter to search global minimum, have the option to use longer time to search for better segementation
 
 3/26/2016   added analysis UI: UIViewAnalysis
             added analysis module: CellAnalyzer
             added CellAnalyzer method: extractParticlePairDistance
             added CellAnalyzer method: extractParitcleContourDistance
-            add export to excel
+            added export to excel
+
+3/27/2016   changed the way UI and Movie search for possible channel types, will automatically search the package for it
+            moved ChannelFluorescentMembrane3D to ChannelFluorescentMembrane3DSpherical
+            added non spherical reconstruction channel ChannelFluorescentMembrane3D

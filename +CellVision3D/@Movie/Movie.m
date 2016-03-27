@@ -5,8 +5,6 @@ classdef Movie < CellVision3D.HObject
     
         
     properties (Constant)
-        channel_options = {'BrightfieldContour3D','FluorescentParticle3D',...
-            'FluorescentMembrane3D'}
     end
     
     %load movie
@@ -88,8 +86,11 @@ classdef Movie < CellVision3D.HObject
         end
     end
     
-    methods (Static)
+    methods (Static, Access = public)
+        %
         [  ] = view3D( wimg3,varargin )
+        % get all possible channel types and channel class names
+        [ channeltypes, channelclassnames ] = getChannelTypes(  )
     end
     
     

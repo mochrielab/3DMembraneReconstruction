@@ -1,7 +1,7 @@
 
 classdef ChannelFluorescentMembrane3D < CellVision3D.Channel ...
-        & CellVision3D.MeshBuilder3DSphere & ...
-        CellVision3D.ImageSegmenterFluorescentMembrane3DSphere
+        & CellVision3D.MeshBuilder3D & ...
+        CellVision3D.ImageSegmenterFluorescentMembrane3D
     % channel for spherical fluroescent membranes
     % 11/17/2015 Yao Zhao
     
