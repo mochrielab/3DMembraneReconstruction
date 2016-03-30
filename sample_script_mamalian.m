@@ -4,11 +4,14 @@
 
 
 %% setting up and load movie
+clear all;close all;clc;
 % select movie file
 movie=CellVision3D.Movie('sample_image_mamalian.dv');
 % set channels
 label='mamalian membrane';
-movie.setChannels('FluorescentMembrane3D',label);
+movie.setChannels('FluorescentMembrane3DSpherical',label);
+% reset pix2um ... wrong values selected
+movie.pix2um=0.107;
 % load movie to RAM
 movie.load();
 %% initialize channel
@@ -18,9 +21,11 @@ channel = movie.getChannel(label);
 channel.lobject=100;
 % initialize the movie 
 contours = channel.init(1);
+% view
+channel.view();
 %% construct cell 
 % construct the cell only by membrane
-cells = CellVision3D.Cell.constructCellsByMembrane(contours);
+cells = CellVision3D.CellConstructor.constructCellsByMembrane(contours);
 %% analyze cell
 % run the analysis based on constructed cells
 channel.run(cells,@(x)1,[]);

@@ -7,7 +7,7 @@ clear all;clc;close all
 movie=CellVision3D.Movie('sample_image.dv');
 % set channels
 movie.setChannels('FluorescentParticle3D','lacO',...
-    'FluorescentMembrane3D','cut11');
+    'FluorescentMembrane3DSpherical','cut11');
 % load movie to RAM
 movie.load();
 %% initialize lacO channel

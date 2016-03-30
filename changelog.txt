@@ -33,3 +33,6 @@
 3/27/2016   changed the way UI and Movie search for possible channel types, will automatically search the package for it
             moved ChannelFluorescentMembrane3D to ChannelFluorescentMembrane3DSpherical
             added non spherical reconstruction channel ChannelFluorescentMembrane3D
+
+3/30/2016   fixed the channel description desplay
+            modified the way to pass parameters to cell constructor            

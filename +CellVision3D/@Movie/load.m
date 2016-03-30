@@ -29,7 +29,11 @@ else
     omeMeta1=data{4};
     %     obj.omeMeta=omeMeta1;
     try
-        obj.pix2um=omeMeta1.getPixelsPhysicalSizeY(0).getValue();
+        if isempty(obj.pix2um)
+            obj.pix2um=omeMeta1.getPixelsPhysicalSizeY(0).getValue();
+        else
+            warning('pixel to micron ratio already set, skip reading metadata');
+        end
     catch
         if isUI
             query=CellVision3D.UIPopupQuestion(...
@@ -42,7 +46,11 @@ else
         end
     end
     try
-        obj.vox2um=omeMeta1.getPixelsPhysicalSizeZ(0).getValue();
+        if isempty(obj.vox2um)
+            obj.vox2um=omeMeta1.getPixelsPhysicalSizeZ(0).getValue();
+        else
+            warning('voxel to micron ratio already set, skip reading metadata');
+        end
     catch
         if isUI
             query=CellVision3D.UIPopupQuestion(...

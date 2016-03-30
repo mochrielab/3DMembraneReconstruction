@@ -19,7 +19,7 @@ for ichannel=1:obj.numchannels
     tmptype=varargin{2*ichannel-1};
 
     % get types of channels
-    [types,classnames]=CellVision3D.Movie.getChannelTypes();
+    [types,classnames,descr]=CellVision3D.Channel.getChannelTypes();
 
     % if specified type can be fonud
     if sum(strcmp(tmptype,types))

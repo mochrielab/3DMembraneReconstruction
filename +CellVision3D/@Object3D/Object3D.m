@@ -5,7 +5,8 @@ classdef Object3D < CellVision3D.HObject
         zxr
     end
     
-    methods
+    methods (Access = public)
+
     end
     
 end

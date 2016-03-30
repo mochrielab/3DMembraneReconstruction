@@ -1,5 +1,5 @@
 The cellvision3D package contains data classes, function classes, operation classes and ui classes for image analysis for 2d/3d brightfield/fluorescent cell/membrane/particles analysis.
- 
+Last updated: 12/2015 Yao Zhao
 -------------------------------------------------------------------------------------------------------------
 HObject class: base handle class for everything, defines universal methods
  

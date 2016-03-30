@@ -93,5 +93,8 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
     methods( Abstract)
     end
     
+    methods (Access=public, Static)
+     [ channeltypes, channelclassnames,descriptions ] = getChannelTypes(  )
+    end
 end
 

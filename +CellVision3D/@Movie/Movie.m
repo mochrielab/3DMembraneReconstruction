@@ -90,7 +90,7 @@ classdef Movie < CellVision3D.HObject
         %
         [  ] = view3D( wimg3,varargin )
         % get all possible channel types and channel class names
-        [ channeltypes, channelclassnames ] = getChannelTypes(  )
+    %    [ channeltypes, channelclassnames ] = getChannelTypes(  )
     end
     
     

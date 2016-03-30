@@ -13,9 +13,14 @@ for i=1:numchannels
     types{i}=movie.getChannel(i).type;
 end
 
-contours=obj.data.channelresults(strcmp(types,'BrightfieldContour3D'));
-membranes=obj.data.channelresults(strcmp(types,'FluorescentMembrane3D'));
-particles=obj.data.channelresults(strcmp(types,'FluorescentParticle3D'));
+% contours=obj.data.channelresults(strcmp(types,'BrightfieldContour3D'));
+% membranes=obj.data.channelresults(strcmp(types,'FluorescentMembrane3D'));
+% particles=obj.data.channelresults(strcmp(types,'FluorescentParticle3D'));
+contours=obj.data.channelresults(cellfun(@(x)~isempty(strfind(x,'Contour')),types));
+membranes=obj.data.channelresults(cellfun(@(x)~isempty(strfind(x,'Membrane')),types));
+particles=obj.data.channelresults(cellfun(@(x)~isempty(strfind(x,'Particle')),types));
+
+
 
 % get the construction method of cell
 [constructionmethods,descriptions]=CellVision3D.CellConstructor.getCellConstructionMethods;
