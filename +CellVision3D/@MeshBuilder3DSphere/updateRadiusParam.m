@@ -6,8 +6,8 @@ function [  ] = updateRadiusParam( obj, out )
 radius = sqrt([out.Area]/pi);
 minradius=min(radius);
 maxradius=max(radius);
-rmin = round(max(1, min(minradius-5,minradius*.6)));
-rmax = round(max(maxradius+5,maxradius*1.4));
+rmin = round(max(1, min(minradius-5,minradius*.8)));
+rmax = round(max(maxradius+5,maxradius*1.1));
 % if rmax - rmin < 20
 %     rstep = .3;
 % elseif rmax - rmin < 30
@@ -15,7 +15,7 @@ rmax = round(max(maxradius+5,maxradius*1.4));
 % else
 %     rstep =1;
 % end
-rstep = (rmax-rmin)/50;
+rstep = (rmax-rmin)/30;
 
 obj.rmin=rmin;
 obj.rmax=rmax;

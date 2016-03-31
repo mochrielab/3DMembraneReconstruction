@@ -35,4 +35,7 @@
             added non spherical reconstruction channel ChannelFluorescentMembrane3D
 
 3/30/2016   fixed the channel description desplay
-            modified the way to pass parameters to cell constructor            
+            modified the way to pass parameters to cell constructor     
+            * added 3d canny edge filter
+            * added 3d image binning       
+            * added 3d edge finding for binary images, support 3 kinds of connection, 6 way, 18 way and 26 way

@@ -4,6 +4,7 @@
 
 
 %% setting up and load movie
+clear all; close all; clc
 % select movie file
 movie=CellVision3D.Movie('sample_image_mamalian2.dv');
 
@@ -12,11 +13,17 @@ label='mamalian membrane';
 movie.setChannels('FluorescentMembrane3D',label);
 % load movie to RAM
 movie.load();
-%% initialize channel
+% initialize channel
 % get channel
 channel = movie.getChannel(label);
-% set the size of object to 100
-channel.lobject=30;
+
+
+%%
+% get the first image
+
+
+
+%%
 % initialize the movie 
 contours = channel.init(1);
 % view the result
