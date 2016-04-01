@@ -13,6 +13,12 @@ bin = [bin(1),bin(1),bin(2)];
 bsz=floor(size(img3)./bin);
 b=zeros(bsz);
 
+% if scale is 1
+if cumprod(bin==1)==1
+    b=img3;
+    return
+end
+
 
 for iz=1:bsz(3)
     for ic=1:bsz(2)

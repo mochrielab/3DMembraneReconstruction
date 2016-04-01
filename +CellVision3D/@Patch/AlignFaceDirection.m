@@ -1,4 +1,4 @@
-function [ obj ] = AlignFaceDirection( obj )
+function [ obj ] = alignFaceDirection( obj )
 %adjust face directions to facing same direction
 % 3/14/2015 Yao Zhao
 
@@ -7,6 +7,7 @@ pts=obj.vertices;
 numpts=size(pts,1);
 
 facesfinal=[];
+obj.labelPatch;
 for ipatch=1:obj.numpatches
 % sort faces in rising order
 facesptmp=sort(obj.faces(obj.facespid==ipatch,:),2);
@@ -76,11 +77,9 @@ facesfinal=[facesfinal;facesnew];
 end
 %%
 obj.faces=facesfinal;
-obj=GetEdgesAndNeighbors( obj );
+obj=calculateEdgesAndNeighbors( obj );
 
-if obj.diagnostic_mod_on==1;
-obj.DiagnoseMeshTopology;
-end
+
 
 end
 

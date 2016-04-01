@@ -38,15 +38,20 @@ classdef Patch < CellVision3D.HObject
         
         [ patches ] = splitPatch( patch )
         
-        [ obj ] = labelPatch( obj )
+        [ obj ] = alignFaceDirection( obj )
+        
+        [ obj ] = calculateVertexNormalDirection( obj )
+        
+        [  ] = scale( patch, factors)
         
     end
     
     methods (Access = private)
         
         % calculate edges and neighbors
-        [obj ] = calculateEdgesAndNeighbors( obj );
+        [ obj ] = calculateEdgesAndNeighbors( obj );
         
+        [ obj ] = labelPatch( obj )
         
         [ obj ] = balancePoints( obj )
         

@@ -11,6 +11,7 @@ movie=CellVision3D.Movie('sample_image_mamalian2.dv');
 % set channels
 label='mamalian membrane';
 movie.setChannels('FluorescentMembrane3D',label);
+movie.pix2um=0.266;
 % load movie to RAM
 movie.load();
 % initialize channel
@@ -20,9 +21,16 @@ channel = movie.getChannel(label);
 
 %%
 % get the first image
-
-
-
+clc
+img3= channel.grabImage3D(1);
+% img3=CellVision3D.Image3D.crop(img3,[50 280 30 250 1 size(img3,3)]);
+sg = CellVision3D.ImageSegmenterFluorescentMembrane3D();
+sg.setParam('zxr',channel.zxr);
+sg.lobject=50;
+sg.lnoise=.5;
+sg.binxy=2;
+sg.binz=4;
+%  ps=sg.segmentLarge(img3);
 %%
 % initialize the movie 
 contours = channel.init(1);

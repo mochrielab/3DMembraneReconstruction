@@ -12,7 +12,8 @@ out=obj.segment(image3,'noshowplot');
 %                 .MeshBuilder3DSphere.generateMeshSphere(3);%
 
 % update the rmin, rmax and rstep automatically
-obj.updateRadiusParam(out);
+obj.updateRadiusParam(sqrt([out.Area]/pi));
+
 
 % create sphere mesh
 [points,faces,edges,neighbors] = obj.generateMeshSphere(obj.ndivision);

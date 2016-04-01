@@ -11,9 +11,14 @@ if patch.numpatches <=1
 else
     patches=[];
     for ipatch=1:patch.numpatches
-        p.vertices = patch.vertices(patch.ptsid==ipatch,:);
-        p.faces = patch.faces(patch.facespid==ipatch,:);
+        pchoose=patch.ptspid==ipatch;
+        p.vertices = patch.vertices(pchoose,:);
+        numv = size(p.vertices,1);
+        vconversion =zeros(size(pchoose));
+        vconversion(pchoose)=1:numv;
+        p.faces = vconversion(patch.faces(patch.facespid==ipatch,:));
         patches=[patches,CellVision3D.Patch(p)];
+        patches(ipatch).labelPatch;
     end
 end
 

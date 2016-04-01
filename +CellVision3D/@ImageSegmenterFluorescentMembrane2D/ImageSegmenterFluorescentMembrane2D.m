@@ -10,6 +10,10 @@ classdef ImageSegmenterFluorescentMembrane2D < CellVision3D.ImageSegmenter
     end
     
     methods
+        % constructor
+        function obj=ImageSegmenterFluorescentMembrane2D(varargin)
+            obj@CellVision3D.ImageSegmenter(varargin{:});
+        end
         out=segment(obj,im)
     end
     

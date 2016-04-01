@@ -7,19 +7,53 @@ function [outputpos] = fitMesh(obj,image3,initialpos,vertices,faces,edges,neighb
 %        edges - sphere edges
 %        neighbors - sphere neighbors
 % outputpos: vertices of the fit result (image position, not scaled by zxr)
+% added the option to fit a a specified scale
 %  Yao Zhao 12/11/2015
 
+% add the option to fit at the scale 3/31/2016
+scale=1;
+isflexible=false;
+for i=1:length(varargin)/2
+    switch lower(varargin{2*i-1})
+        case 'scale'
+            scale = varargin{2*i};
+            if scale < 1 || mod(scale,1)~=0
+                error('wrong scale');
+            end
+        case 'flexible'
+            % override the radius range lower bound
+            isflexible = varargin{2*i};
+        otherwise
+    end
+end
+
+
+% convert the scale  3/31/2016
+% point scaled
+image3 = CellVision3D.Image3D.binning(image3,scale);
+initialpos = initialpos/scale + (scale-1)/scale/2;
+% calculate new radius
+cnt=(mean(initialpos,1));
+tmppos=initialpos-ones(size(initialpos,1),1)*cnt;
+tmppos(:,3)=tmppos(:,3)*obj.zxr;
+r=sqrt(sum((tmppos).^2,2));
+% update param
+if isflexible
+    obj.updateRadiusParam([1,max(r)]);
+    display('run flexible')
+else
+    obj.updateRadiusParam(r);
+end
 
 % z x ratio
 zxr=obj.zxr;
 
-% centroids of the mesh
-cnt=(mean(initialpos,1));
-% cnt(3)=gfit(2)/zxr;
 
 % rounded center
 ncnt=round(cnt);
 dcnt=cnt-ncnt;
+
+
 %% 3d to 2d img
 %calculate the linear index and weights for intensity matrix
 
@@ -35,7 +69,7 @@ weights=zeros(length(initialpos),length(rs),4);
 xybordersize=1;
 xs=vertices(:,1)*rs+obj.rmax+1+xybordersize+dcnt(1);
 ys=vertices(:,2)*rs+obj.rmax+1+xybordersize+dcnt(2);
-zs=vertices(:,3)*rs/obj.zxr+cnt(3); 
+zs=vertices(:,3)*rs/obj.zxr+cnt(3);
 
 % crop the image
 img=CellVision3D.Image3D.crop(image3,...
@@ -53,13 +87,22 @@ end
 img1=img;
 % add slices to bottom
 for i=zmin:0
-    img1=cat(3,img(:,:,1),img1);
+    if obj.padsame
+        img1=cat(3,img(:,:,1),img1);
+    else
+        img1=cat(3,zeros(size(img(:,:,1)))+min(img(:)),img1);
+    end
 end
 % add slices to top
 zmax=ceil(max(zs(:)));
 for i=size(image3,3):zmax
-    img1=cat(3,img1,img(:,:,end));
+    if obj.padsame
+        img1=cat(3,img(:,:,1),img1);
+    else
+        img1=cat(3,img1,zeros(size(img(:,:,end)))+min(img(:)));
+    end
 end
+
 
 %floors
 floor_xs=floor(xs);
@@ -89,11 +132,12 @@ weights(:,:,7)=(1-d_xs).*(d_ys).*(d_zs);
 weights(:,:,8)=(d_xs).*(d_ys).*(d_zs);
 % 3d to 2d
 I=sum(img1(linearindex).*weights,3)';
+% % initial radius
+% tmppos=initialpos-ones(size(initialpos,1),1)*cnt;
+% tmppos(:,3)=tmppos(:,3)*zxr;
+% r=sqrt(sum((tmppos).^2,2));
 
-% initial radius
-tmppos=initialpos-ones(size(initialpos,1),1)*cnt;
-tmppos(:,3)=tmppos(:,3)*zxr;
-r=sqrt(sum((tmppos).^2,2));
+% CellVision3D.Image2D.view(I)
 
 %% minimizing energy
 % construct cost
@@ -107,9 +151,10 @@ energy=@(ind)CellVision3D.Fitting.ContourEnergy3DSphere(ind,I,cost,rs0,edges,nei
 % construct bound
 lb_c=zeros(size(initialpos,1),1)+1.001;
 ub_c=zeros(size(initialpos,1),1)+length(rs)-0.001;
+ini = (r-rs(1))/(rs(2)-rs(1))+1;
 % fitting
 options=optimoptions('fmincon','MaxFunEvals', 1e6,'TolX',1e-3,'GradObj','on','Display','off');
-[indr,fval,exitflag,output] = fmincon(energy,r,[],[],[],[],lb_c,ub_c,[],options);
+[indr,fval,exitflag,output] = fmincon(energy,ini,[],[],[],[],lb_c,ub_c,[],options);
 %     display(cost);
 [~,grad,intensity,dr]=energy(indr);
 r=rs(1)+(indr-1)*(rs(2)-rs(1));
@@ -117,9 +162,12 @@ r=rs(1)+(indr-1)*(rs(2)-rs(1));
 
 x=r.*vertices(:,1)+cnt(1);
 y=r.*vertices(:,2)+cnt(2);
-z=r.*vertices(:,3)/zxr+cnt(3); 
+z=r.*vertices(:,3)/zxr+cnt(3);
 % z=r.*vertices(:,3)+cnt(3); % not modified to rescale z, 3/23/2016
 outputpos = [x,y,z];
+
+% convert the scale  3/31/2016
+outputpos = outputpos *scale - (scale-1)/2;
 
 %% plot all together
 showplot=0;
@@ -141,8 +189,9 @@ if showplot
     hw=obj.rmax+1;
     wsz=hw*2+1;
     zxr=obj.zxr;
-    numstacks=size(img1,3);
-    windpos=[r.*vertices(:,1)+hw+1,r.*vertices(:,2)+hw+1,r.*vertices(:,3)/zxr+cnt(3)+zshift];
+    numstacks=size(img,3);
+    %     windpos=[r.*vertices(:,1)+hw+1,r.*vertices(:,2)+hw+1,r.*vertices(:,3)/zxr+cnt(3)+zshift];
+    windpos=[r.*vertices(:,1)+hw+1,r.*vertices(:,2)+hw+1,r.*vertices(:,3)/zxr+cnt(3)];
     contour=[];
     for i=1:numstacks
         [ allcontours,lowerfaces,pts] = ...
@@ -179,10 +228,10 @@ if showplot
     % fitting
     gaussfit=@(P) CellVision3D.Fitting.AreaSphere(P,stack_z) - area_fit;
     gfit=lsqnonlin(gaussfit,ini_g,lb_g,ub_g,options_sphere);
-%     f=figure(103);
-%     set(f,'Unit','pixels','Position',[0 50 1000 750]);
-%     clf
-
+    %     f=figure(103);
+    %     set(f,'Unit','pixels','Position',[0 50 1000 750]);
+    %     clf
+    
     % delete previous
     delete(get(parent,'Children'));
     % plot 3D shape
@@ -219,7 +268,7 @@ if showplot
     ylabel('area (pixel^2)');
     
     % plot ten stacks
-    for i=1:11
+    for i=1:10
         % set window layouts
         pr=floor((i-1)/5);
         pc=i-5*pr-1;
@@ -228,12 +277,12 @@ if showplot
         axes('Parent',parent,'Unit','pixel','Position',[pc*imgsize pr*imgsize imgsize imgsize]);
         cla;
         % set stack interval
-%         stacki=round(cnt(3)-0.5)+(i-5)*floor((numstacks/10)^.7);
-%         istack = max(1,round(meanradius/zxr/4.5))*(i-6)+round(cnt(3)-.5);
+        %         stacki=round(cnt(3)-0.5)+(i-5)*floor((numstacks/10)^.7);
+        %         istack = max(1,round(meanradius/zxr/4.5))*(i-6)+round(cnt(3)-.5);
         istack = max(1,round(numstacks/11))*(i-6)+round(cnt(3)-.5);
         % plot each stack
         if istack>=1 && istack<=numstacks
-            imagesc(img1(:,:,istack));colormap gray;axis image;
+            imagesc(img(:,:,istack));colormap gray;axis image;
             xi=contour(istack).x;
             yi=contour(istack).y;
             hold on;

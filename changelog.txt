@@ -39,3 +39,22 @@
             * added 3d canny edge filter
             * added 3d image binning       
             * added 3d edge finding for binary images, support 3 kinds of connection, 6 way, 18 way and 26 way
+            * added 3d morphological opertors, imopen,imclose,imdilate,ierode
+
+3/31/2016   build module ImageSegmenterFluorescentMembrane3D
+            * add scale according to bin size in Patch class
+            # one error to fix in scale@Patch
+            # ImageSegmenterFluorescentMembrane3D on hold
+            * add bin size adjustment in spherical fitting, it will automatically run the analysis first with large bin size to find better initialization location be finely fit the nuclei
+            # when runining script, new figure pop up instead of overriding
+            cleaned script files
+            add string converter for notation in UI files
+            
+
+------------------------------------------------------------------------------------
+
+
+
+
+
+            

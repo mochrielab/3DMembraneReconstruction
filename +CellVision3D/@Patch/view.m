@@ -38,7 +38,7 @@ h=patch(p1,'FaceColor',facecolor,...
 
 
 view(3);
-camlight;
+% camlight;
 lighting gouraud;
 axis image;
 

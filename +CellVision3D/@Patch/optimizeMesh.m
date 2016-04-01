@@ -4,17 +4,19 @@ function [ p ] = optimizeMesh( p )
 % 3/12/2015 Yao Zhao
 
 %% get edges and neighbors
-clc
+
 for i=1:2
     tic
-p.balanceTopology;
-p.balancePoints;
-p.splitLargeQaudrangle(p.mesh_size );
-p.removeThreeWayConnectionPoints;
-p.removeFourWayConnectionPoints;
+    p.balanceTopology;
+    p.balancePoints;
+    p.splitLargeQaudrangle(p.mesh_size );
+    p.removeThreeWayConnectionPoints;
+    p.removeFourWayConnectionPoints;
+    toc
 end
 p.balanceTopology;
 p.balancePoints;
+p.labelPatch;
 
 
 end

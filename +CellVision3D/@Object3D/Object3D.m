@@ -1,7 +1,7 @@
 classdef Object3D < CellVision3D.HObject
     % base class of 3D object
     
-    properties (SetAccess = protected)
+    properties (Access = public)
         zxr
     end
     

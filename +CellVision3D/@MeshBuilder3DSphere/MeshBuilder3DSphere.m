@@ -4,11 +4,12 @@ classdef MeshBuilder3DSphere < CellVision3D.MeshBuilder3D
     % 12/4/2015
     % Yao Zhao
     
-    properties (Access = protected)
+    properties (SetAccess = public)
         rmin=3; % min radius of mesh
         rmax=15; % max radius of mesh
         rstep=.3; % interpolation stepping of radius
         ndivision = 3; % mesh division parameter, the larger the finer
+        padsame = true;% pad the out of boundary z slice with same image as the boundary image, otherwise will pad with zeros
     end
     
     methods
