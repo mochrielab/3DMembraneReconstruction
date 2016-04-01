@@ -8,12 +8,18 @@ classdef Movie < CellVision3D.HObject
     end
     
     %load movie
-    properties (SetAccess = public)
+    properties (Access = public, Hidden=true)
         % file system
         filename % file name
         path % file path
         extension % file extention
         
+            % data information
+        numchannels % number of channels
+        channels % channel handles
+    end
+    
+    properties (SetAccess = public)
         % microscope data
         pix2um  % pixel 2 microns
         vox2um  % voxel height
@@ -27,14 +33,6 @@ classdef Movie < CellVision3D.HObject
         sizeX % image size x
         sizeY % image size y
         sizeZ % image size Y
-                
-        % data information
-        numchannels % number of channels
-        channels % channel handles
-        
-        % extracted data
-        cells
-        particles
     end
     
     properties (Hidden=true)
@@ -42,7 +40,7 @@ classdef Movie < CellVision3D.HObject
 %         fformat
     end
     
-    properties (Dependent)
+    properties (Dependent, Hidden = true)
         filein
         zxr
     end
@@ -76,6 +74,7 @@ classdef Movie < CellVision3D.HObject
         [ obj ] = load( obj , varargin )
         [ obj ] = getChannel( obj , label )
         [ movie ] = save( movie,isoverride,varargin )
+        peek(obj)
                         
         %dependent properties
         function filein=get.filein(obj)

@@ -11,11 +11,11 @@ descriptions=[{'none'}];
 for i=1:length(constructionmethods)
     switch constructionmethods{i}
         case 'constructCellsByContourParticles'
-            disc='brightfield contours and fluorescent particles inside the cell';
+            disc='brightfield contours and fluorescent particles inside the cell, need to be updated';
         case 'constructCellsByMembraneParticles'
             disc='fluorescent membranes and fluorescent particles inside the membranes';
         case 'constructCellsByContour'
-            disc='only brightfield contours';
+            disc='only brightfield contours, still in build';
         case 'constructCellsByMembrane'
             disc='only fluorescent membrane';
         case 'constructCellsByParticles'

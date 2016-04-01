@@ -86,6 +86,7 @@ classdef UIView < CellVision3D.HObject & matlab.mixin.Heterogeneous
         end
         
         
+        
         % clear panel
         function clearMainPanel(obj)
             ch=get(obj.main_panel,'Children');
@@ -109,19 +110,26 @@ classdef UIView < CellVision3D.HObject & matlab.mixin.Heterogeneous
                 close(obj.figure_handle);
             end
         end
-
+        
         % create parameter setter array
         displaySetterArray(obj,obj_handles,obj_names,varargin)
         
         % clear parameter setter array
         function clearSetterArray(obj)
-            delete(obj.setter_array_handles);
-            obj.setter_array_handles=[];
+            try
+                delete(obj.setter_array_handles);
+                obj.setter_array_handles=[];
+            catch
+            end
         end
         
         % go next
         function next(obj)
         end
+    end
+    
+    methods (Static)
+        desc = getDescription(classname,propname);
     end
     
     events

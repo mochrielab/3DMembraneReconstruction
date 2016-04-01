@@ -12,23 +12,28 @@ channelclassnames = ...
 channeltypes=cellfun(@(x)x(21:end),channelclassnames,'UniformOutput',0);
 channeltypes{strcmp(channeltypes,'')}='None';
 descriptions=cell(size(channeltypes));
+
+isStable = true(size(channeltypes));
 for iChannelType=1:length(descriptions)
     switch channeltypes{iChannelType}
         case'None'
         descriptions{iChannelType}='skip this channel';
         case 'BrightfieldContour3D'
-            descriptions{iChannelType}='z stack of brightfield cells';
+            descriptions{iChannelType}='brightfield cells';
         case 'FluorescentParticle3D'
-            descriptions{iChannelType}='z stack of fluorescent particles';
+            descriptions{iChannelType}='fluorescent particles';
         case 'FluorescentMembrane3DSpherical'
-            descriptions{iChannelType} = 'z stack of fluorescent membranes near spherical shape';
+            descriptions{iChannelType} = 'fluorescent membranes';
         case 'FluorescentMembrane3D'
-            descriptions{iChannelType} = 'z stack of fluorescent membranes, any shape';
+            descriptions{iChannelType} = 'fluorescent membranes, any shape';
+            isStable(iChannelType)=false;
         otherwise 
             descriptions{iChannelType}='can''t find description';
     end
 end
 
-
+channeltypes=channeltypes(isStable);
+channelclassnames=channelclassnames(isStable);
+descriptions=descriptions(isStable);
 end
 

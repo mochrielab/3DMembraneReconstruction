@@ -49,6 +49,7 @@
             # when runining script, new figure pop up instead of overriding
             cleaned script files
             add string converter for notation in UI files
+            add option for logical type buttons
             
 
 ------------------------------------------------------------------------------------

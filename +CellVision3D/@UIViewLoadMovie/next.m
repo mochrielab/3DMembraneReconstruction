@@ -30,10 +30,31 @@ try
 catch
 end
 
+% peek movie parameters before loading movie
+movie.peek;
+
+%% set input parameters
+% update buttion text
+waitforbutton =1;
+obj.navigation_next_button.set('String','Confirm Movie Parameters','Callback',@(hobject,eventdata)uiresume);
+
+obj.clearMainPanel;
+% create parameter array
+obj.displaySetterArray({movie},[]);
+
+
+uiwait;
+
+% wait for the figure to close by pressing next channel
+obj.clearSetterArray;
+%% load the data
+
 % load files
 movie.load(@(i)obj.progress_bar_handle.setPercentage(i,'loading movie...'));
 % output
 obj.data.movie=movie;
 
+
+  
 end
 
