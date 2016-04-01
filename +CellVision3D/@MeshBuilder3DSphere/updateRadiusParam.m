@@ -15,11 +15,11 @@ rmax = round(max(maxradius+5,maxradius*1.3));
 % else
 %     rstep =1;
 % end
-rstep = (rmax-rmin)/40;
+rstep = .3;%(rmax-rmin)/40;
 
 obj.rmin=rmin;
 obj.rmax=rmax;
 obj.rstep = rstep;
-obj.ndivision=3;%floor(log(mean(radius)/10)/log(2))+3;
+% obj.ndivision=3;%floor(log(mean(radius)/10)/log(2))+3;
 end
 

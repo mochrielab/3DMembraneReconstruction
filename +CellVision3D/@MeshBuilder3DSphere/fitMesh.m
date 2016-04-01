@@ -31,6 +31,9 @@ end
 % convert the scale  3/31/2016
 % point scaled
 image3 = CellVision3D.Image3D.binning(image3,scale);
+% image3 = CellVision3D.Image3D.bpass(image3,obj.lnoise/scale,obj.lobject/scale,obj.zxr);
+
+
 initialpos = initialpos/scale + (scale-1)/scale/2;
 % calculate new radius
 cnt=(mean(initialpos,1));
@@ -53,7 +56,7 @@ zxr=obj.zxr;
 ncnt=round(cnt);
 dcnt=cnt-ncnt;
 
-
+obj.rstep
 %% 3d to 2d img
 %calculate the linear index and weights for intensity matrix
 
@@ -66,7 +69,7 @@ linearindex=nan(length(initialpos),length(rs),4);
 weights=zeros(length(initialpos),length(rs),4);
 
 %points to be interpolated, coordinates in subwindow
-xybordersize=1;
+xybordersize=3;
 xs=vertices(:,1)*rs+obj.rmax+1+xybordersize+dcnt(1);
 ys=vertices(:,2)*rs+obj.rmax+1+xybordersize+dcnt(2);
 zs=vertices(:,3)*rs/obj.zxr+cnt(3);
@@ -143,7 +146,7 @@ I=sum(img1(linearindex).*weights,3)';
 % construct cost
 th2=CellVision3D.Image.getPercentageValue(I,.99);
 th1=CellVision3D.Image.getPercentageValue(I,.7);
-cost=sqrt((th2-th1)/2);
+cost=sqrt((th2-th1)/2)*(10/mean(r))^2;
 
 rs0=rs(1)/(rs(2)-rs(1))-1;
 % energy function
@@ -186,7 +189,7 @@ end
 
 if showplot
     % calculate contour in each plane
-    hw=obj.rmax+1;
+    hw=obj.rmax+xybordersize;
     wsz=hw*2+1;
     zxr=obj.zxr;
     numstacks=size(img,3);

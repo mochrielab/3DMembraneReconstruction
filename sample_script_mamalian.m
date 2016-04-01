@@ -23,7 +23,8 @@ channel = movie.getChannel(label);
 channel.lobject=100;
 % pad with zeros instead of same image
 channel.padsame=false;
-
+% split the cell four way
+channel.ndivision=3;
 % initialize the movie 
 contours = channel.init(1);
 % view
@@ -39,3 +40,21 @@ movie.view(cells);
 % run the analysis based on constructed cells
 f=figure('Position',[50 50 1200 600]);
 channel.run(cells,[],f);
+
+%%
+close all
+CellVision3D.Grapher.plot3DThreePanel(cells(1).contours(1));
+CellVision3D.Grapher.save('mamalian3d3panel.png');
+CellVision3D.Grapher.plot3DZ(cells(1).contours(1));
+CellVision3D.Grapher.save('mamalian3dZ.png');
+
+CellVision3D.Grapher.plot2DContour(cells(1).contours(1),...
+    channel, 5/movie.pix2um, 1,34);
+CellVision3D.Grapher.save('mamalian2dcontour.png');
+CellVision3D.Grapher.plot2DContour(cells(1).contours(1),...
+    channel, 5/movie.pix2um, 1,34,true);
+CellVision3D.Grapher.save('mamalian2draw.png');
+
+%%
+CellVision3D.Grapher.save('demo.png');
+
