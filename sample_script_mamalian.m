@@ -56,5 +56,5 @@ CellVision3D.Grapher.plot2DContour(cells(1).contours(1),...
 CellVision3D.Grapher.save('mamalian2draw.png');
 
 %%
-CellVision3D.Grapher.save('demo.png');
+% CellVision3D.Grapher.save('demo.png');
 

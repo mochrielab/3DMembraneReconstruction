@@ -19,6 +19,9 @@ print(gcf,filename,codec);
 filename2=fullfile(dirpath,[file,'.eps']);
 print(gcf,filename2,'-deps');
 
+filename3=fullfile(dirpath,[file,'.fig']);
+savefig(filename3);
+
 
 end
 

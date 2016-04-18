@@ -56,7 +56,6 @@ zxr=obj.zxr;
 ncnt=round(cnt);
 dcnt=cnt-ncnt;
 
-obj.rstep
 %% 3d to 2d img
 %calculate the linear index and weights for intensity matrix
 
