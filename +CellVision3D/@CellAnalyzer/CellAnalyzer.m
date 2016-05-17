@@ -22,8 +22,11 @@ classdef CellAnalyzer < CellVision3D.HObject
         extractContourMeanRadius(cells,contourchannellabel)        
         % get distance between particles
         extractContourVolume(cells,contourchannellabel)
+        % get relative distance from particle to contour
+        extractParticleContourDistanceRelative(cells,particlechannellabel,contourchannellabel)
         % get methods info
         [analysismethods,descriptions,inputformats]=getCellAnalysisMethods()
+        
         
     end
     

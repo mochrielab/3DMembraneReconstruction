@@ -47,10 +47,11 @@ channel2.run(cells);
 CellVision3D.CellAnalyzer.extractParticleContourDistance(cells,'lacO','cut11');
 CellVision3D.CellAnalyzer.extractContourMeanRadius(cells,'cut11');
 CellVision3D.CellAnalyzer.extractContourVolume(cells,'cut11');
+CellVision3D.CellAnalyzer.extractParticleContourDistanceRelative(cells,'lacO','cut11');
 
 %% save the result
 % save the full result to the directory of the movie files
 isoverride = 1;
 movie.save(isoverride);
 % export only the runned analysis
-cells.exportCSV('sample_image.csv')
+cells.exportCSV('sample_image_status.csv')
