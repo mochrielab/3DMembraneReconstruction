@@ -11,6 +11,7 @@ particles=repmat(CellVision3D.Particle3D.empty,1,size(pos,1));
 for i=1:size(pos,1);
     particles(i)=CellVision3D.Particle3D(obj.label,pos(i,:),...
         obj.numframes,obj.zxr);
+    particles(i).setPix2um(obj.pix2um);
 end
 % save particles to itself
 obj.particles=particles;

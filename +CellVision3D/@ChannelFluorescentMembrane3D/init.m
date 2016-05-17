@@ -26,8 +26,8 @@ for i=1:length(out)
         (ones(size(points,1),1)*[1 1 1/obj.zxr])+...
         ones(size(points,1),1)*(out(i).Centroid.*[1 1 1]),...
         faces,obj.zxr);
+    contours(i).setPix2um(obj.pix2um);
 end
-
 
 % save contours to it self
 obj.contours=contours;

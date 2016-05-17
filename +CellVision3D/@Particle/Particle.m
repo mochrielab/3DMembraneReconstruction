@@ -16,6 +16,7 @@ classdef Particle < CellVision3D.HObject & CellVision3D.UserData
         brightness% brightness of the particles
         numframes % number of frames
         resnorm   % fitting of the particle
+        pix2um=1 % pixel to micron conversion
     end
     
     properties (SetAccess = protected)
@@ -46,6 +47,10 @@ classdef Particle < CellVision3D.HObject & CellVision3D.UserData
                 particles(i).positions=particles(i).positions-drift;
                 
             end
+        end
+        
+        function setPix2um (obj,pixel2um)
+            obj.pix2um = pixel2um;
         end
     end
     

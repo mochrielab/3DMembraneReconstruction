@@ -11,7 +11,8 @@ for icell=1:length(cells)
     % number contours
     for icontour=1:numcontours
 %         radii = zeros(contours(icontour).numframes,1);
-        radii =(contours(icontour).getVolume*3/4/pi)^1/3;
+        radii =(contours(icontour).getVolume*3/4/pi)^(1/3) ...
+                *contours(icontour).pix2um;
         contours(icontour).setUserData('mean_radius',radii);
     end
     

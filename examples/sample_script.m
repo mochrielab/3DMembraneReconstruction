@@ -53,4 +53,4 @@ CellVision3D.CellAnalyzer.extractContourVolume(cells,'cut11');
 isoverride = 1;
 movie.save(isoverride);
 % export only the runned analysis
-cells.exportCSV('test.csv')
+cells.exportCSV('sample_image.csv')

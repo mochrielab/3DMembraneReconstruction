@@ -11,7 +11,8 @@ for icell=1:length(cells)
     % number contours
     for icontour=1:numcontours
 %         radii = zeros(contours(icontour).numframes,1);
-        vols =contours(icontour).getVolume;
+        vols =contours(icontour).getVolume...
+            *contours(icontour).pix2um^3;
         contours(icontour).setUserData('volume',vols);
     end
     

@@ -23,7 +23,8 @@ for icell=1:length(cells)
         particles.setUserData('particle_pair_distance',dist);
     elseif numparticles ==2
         dist=CellVision3D.Math.Geometry.getDistance...
-            (particles(1).positions,particles(2).positions,particles(1).zxr);
+            (particles(1).positions,particles(2).positions,particles(1).zxr)...
+            *particles(1).pix2um;
         particles.setUserData('particle_pair_distance',dist);
     end
     

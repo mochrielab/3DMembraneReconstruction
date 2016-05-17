@@ -12,6 +12,7 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
         sizeX
         sizeY
         sizeZ
+        pix2um
     end
     
     properties (SetAccess = protected)
@@ -36,6 +37,7 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
                 obj.sizeX=movie.sizeX;
                 obj.sizeZ=movie.sizeZ;
                 obj.zxr=movie.zxr;
+                obj.pix2um = movie.pix2um;
             end
         end
         %grab image
