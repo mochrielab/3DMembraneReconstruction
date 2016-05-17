@@ -20,7 +20,11 @@ numcelluserdata = length(celluserdatafieldnames);
 % numcelldata = length(celldatafieldnames);
 % print cell userdata
 for ii=1:numcelluserdata
-    fprintf(file,[celluserdatafieldnames{ii},',']);
+    switch celluserdatafieldnames{ii}
+        otherwise
+            ext='';
+    end
+    fprintf(file,[celluserdatafieldnames{ii},ext,',']);
 end
 
 %contour data
@@ -41,7 +45,15 @@ numcontouruserdata = length(contouruserdatafilednames);
 % end
 % print cell userdata
 for ii=1:numcontouruserdata
-    fprintf(file,[contouruserdatafilednames{ii},',']);
+    switch contouruserdatafilednames{ii}
+        case 'mean_radius'
+            ext = ' (um)';
+        case 'volume'
+            ext = ' (um^3)';
+        otherwise
+            ext='';
+    end
+    fprintf(file,[contouruserdatafilednames{ii},ext,',']);
 end
 
 %particle data
@@ -58,7 +70,15 @@ numparticleuserdata = length(particleuserdatafilednames);
 
 % print cell userdata
 for ii=1:numparticleuserdata
-    fprintf(file,[particleuserdatafilednames{ii},',']);
+    switch particleuserdatafilednames{ii}
+        case 'particle_pair_distance'
+            ext = ' (um)';
+        case 'particle_contour_distance'
+            ext = ' (um)';
+        otherwise
+            ext='';
+    end
+    fprintf(file,[particleuserdatafilednames{ii},ext,',']);
 end
 fprintf(file,'\n');
 
@@ -69,7 +89,7 @@ for icell=1:length(cells)
         contour=contours(icontour);
         for iframe=1:contour.numframes
             fprintf(file,'%d,',icell);
-            fprintf(file,contour.label);
+            fprintf(file,'%s,',contour.label);
             for idata=1:numcontouruserdata
                 try
                     fprintf(file,'%f,',contour.userdata.(contouruserdatafilednames{idata}));
