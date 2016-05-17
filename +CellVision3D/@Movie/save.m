@@ -4,10 +4,11 @@ function [ movie ] = save( movie,isoverride,varargin )
 %
 % 3/25/2015
 % Yao Zhao
-if length(varargin)==0
-    savefile=fullfile(movie.path,[movie.filename,'.mat']);
-elseif length(varargin)==1
-    savefile=varargin{1};
+savefile=fullfile(movie.path,[movie.filename,'.mat']);
+if length(varargin)>=1
+    if ~isempty(varargin{1})
+        savefile=varargin{1};
+    end
 end
 
 if exist(savefile,'file') && isoverride==0
@@ -20,7 +21,7 @@ if exist(savefile,'file') && isoverride==0
     end
 end
 
-if isoverride
+if isoverride || ~exist(savefile,'file')
     movs=cell(1,movie.numchannels);
     for i=1:movie.numchannels
         movs{i}=movie.getChannel(i).unloadData;
@@ -29,7 +30,16 @@ if isoverride
     for i=1:movie.numchannels
         movie.getChannel(i).load(movs{i});
     end
+    
+    % append cell data into the movie
+    if length(varargin)>=2
+        cells=varargin{2};
+        save(savefile,'cells','-append')
+    end
+    
 end
+
+
 
 end
 

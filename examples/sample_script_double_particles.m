@@ -7,8 +7,9 @@
 clear all;close all;clc;
 % select movie file
 movie=CellVision3D.Movie('sample_image_doubleparticle.TIF');
+% display all possible channel types
+display(CellVision3D.Channel.getChannelTypes())
 % set channels
-channellabel='lacO';
 movie.setChannels('FluorescentParticle3D',channellabel);
 % set voxel value because .TIF doesn't contain it
 movie.vox2um=0.2;

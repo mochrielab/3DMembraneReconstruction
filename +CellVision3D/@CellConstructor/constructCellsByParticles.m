@@ -3,27 +3,32 @@ function [ cells ] = constructCellsByParticles( varargin )
 % find nearby particles and group them together to form cells
 
 %%
-numParticleChannels = length(varargin);
-
+numinput = length(varargin);
+th=[];
 
 % group all cells together
 
 % for each particle set
 peaks=[];
 allparticles=[];
-for i=1:numParticleChannels
-    particles=varargin{i};
-    % for each particle channel append peaks, add channel label
-    tmp=particles.getCentroid;
-    peaks=[peaks;tmp,zeros(size(tmp,1),1)+i];
-    allparticles = [allparticles;particles];
+for i=1:numinput
+    if isa(varargin{i},'CellVision3D.Particle')
+        particles=varargin{i};
+        % for each particle channel append peaks, add channel label
+        tmp=particles.getCentroid;
+        peaks=[peaks;tmp,zeros(size(tmp,1),1)+i];
+        allparticles = [allparticles,particles];
+    else
+        th = varargin{i};
+    end
 end
 
 
 % get the cell radius
-zxr=particles(1).getParam('zxr');
-th = CellVision3D.Math.Geometry.getPointsClusterSize(peaks(:,1:3),zxr);
-
+    zxr=particles(1).getParam('zxr');
+if isempty(th)
+    th = CellVision3D.Math.Geometry.getPointsClusterSize(peaks(:,1:3),zxr);
+end
 
 % group the cells
 [groups] = CellVision3D.Math.Geometry.groupPoints...

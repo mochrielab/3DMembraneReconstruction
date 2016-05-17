@@ -12,16 +12,20 @@ classdef ChannelBrightfieldContour3D < CellVision3D.Channel
             obj@CellVision3D.Channel(label,type);
         end
         % generate cells from the a selected frame
-        function contour=init(obj,i)
+        function contour=init(obj,varargin)
+            iframe=1;
+            if length(varargin)>=1
+                iframe=varargin{1};
+            end
             % get image
-            img=obj.grabProjection(i);
+            img=obj.grabProjection(iframe);
             % get cell contours
             out=CellVision3D.guiselector.cellfinderbrightfield2Dgui( img );
             boundaries=out.boundaries;
             % save the data and generate cells
             contour=repmat(CellVision3D.Contour2D.empty,1,length(boundaries));
-            for i=1:length(boundaries)
-                contour(i)=CellVision3D.Contour2D(obj.label,1,boundaries{i});
+            for iframe=1:length(boundaries)
+                contour(iframe)=CellVision3D.Contour2D(obj.label,1,boundaries{iframe});
             end
         end
     end
