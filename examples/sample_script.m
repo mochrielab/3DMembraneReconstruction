@@ -45,6 +45,8 @@ channel1.run(cells);
 channel2.run(cells);
 %% analyze the cells
 CellVision3D.CellAnalyzer.extractParticleContourDistance(cells,'lacO','cut11');
+CellVision3D.CellAnalyzer.extractContourMeanRadius(cells,'cut11');
+CellVision3D.CellAnalyzer.extractContourVolume(cells,'cut11');
 
 %% save the result
 % save the full result to the directory of the movie files

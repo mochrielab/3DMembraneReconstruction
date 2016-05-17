@@ -1,4 +1,4 @@
-function [ vols ] = GetVolume( obj )
+function [ vols ] = getVolume( obj )
 %get volumes of each patches
 
 pts=obj.vertices;
