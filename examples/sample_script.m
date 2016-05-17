@@ -37,12 +37,12 @@ movie.view(cells);
 %only choose the first 5 cells to for test purpose
 cells=cells(1:5);
 % run the analysis based on constructed cells
-f=figure('Position',[50 50 1200 600]);
-channel1.run(cells,[],f);
-channel2.run(cells,[],f);
+% f=figure('Position',[50 50 1200 600]);
+% channel1.run(cells,[],f);
+% channel2.run(cells,[],f);
 % run without the images, much faster
-% channel1.run(cells);
-% channel2.run(cells);
+channel1.run(cells);
+channel2.run(cells);
 %% analyze the cells
 CellVision3D.CellAnalyzer.extractParticleContourDistance(cells,'lacO','cut11');
 
