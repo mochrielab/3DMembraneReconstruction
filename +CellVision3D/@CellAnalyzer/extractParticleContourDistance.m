@@ -24,8 +24,8 @@ for icell=1:length(cells)
         particles.setUserData('particle_contour_distance',dist);
     else
         % num frames
-        numframes=particles(1).numframes;
         for iparticle=1:numparticles
+            numframes=particles(iparticle).numframes;
             dist=zeros(numframes,1);
             for iframe =1:numframes
                 dist=CellVision3D.Math.Geometry.getPointSurfaceDistance(...
