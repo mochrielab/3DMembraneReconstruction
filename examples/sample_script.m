@@ -54,4 +54,4 @@ CellVision3D.CellAnalyzer.extractParticleContourDistanceRelative(cells,'lacO','c
 isoverride = 1;
 movie.save(isoverride);
 % export only the runned analysis
-cells.exportCSV('sample_image_status.csv')
+cells.exportCSV('sample_image_stats.csv')

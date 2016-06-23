@@ -3,6 +3,7 @@ function [analysismethods,descriptions,inputformats]=getCellAnalysisMethods()
 % output possbile analysis methods names, their descriptions and input
 % formmats
 % 3/26/2016 Yao Zhao
+% Updated 6/7/16 Jessica Johnston
 
 analysismethods=methods(CellVision3D.CellAnalyzer);
 analysismethods=analysismethods...
@@ -22,6 +23,15 @@ for i=1:length(analysismethods)
         case 'extractParticleParticleDistance'
             disc='caclulate particle to particle distance between two channels';
             inputformat={'FluorescentParticle3D','FluorescentParticle3D'};
+        case 'extractContourMeanRadius'
+            disc='calculate mean radius of contour';
+            inputformat={'FluorescentMembrane3D'};
+        case 'extractContourVolume'
+            disc='calculate contour volume';
+            inputformat={'FluorescentMembrane3D'};
+        case 'extractParticleContourDistanceRelative'
+            disc='calculate the relative distance between particle and contour';
+            inputformat={'FluorescentParticle3D','FluorescentMembrane3D'};
         otherwise
             disc=[];
             inputformat=[];
