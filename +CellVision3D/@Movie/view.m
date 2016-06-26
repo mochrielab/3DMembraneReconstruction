@@ -20,12 +20,19 @@ if length(varargin) >= 2
 end
 
 % plot cells
+linelength = 10;
 if nargin >1
     cells = varargin{1};
     if obj.numchannels>1
         cells.view(iframe,img3);
     else
         cells.view(iframe,img);
+    end
+    cnt = cells.getCentroid();
+    for i=1:size(cnt,1)
+        plot(cnt(i,1)+[0,linelength],cnt(i,2)+[0,linelength],'w');
+        text(cnt(i,1)+linelength,cnt(i,2)+linelength,num2str(i),...
+            'color','w','FontSize',10);
     end
 end
 

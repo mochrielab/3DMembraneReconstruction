@@ -28,6 +28,9 @@ classdef Cell < CellVision3D.HObject & CellVision3D.UserData
         [ ] = view(cells,iframe, image)
         %function
         exportCSV(cells,filename);
+        % get centroid of the cells
+        cnt = getCentroid(cells);
+        
     end
     
 

@@ -20,6 +20,12 @@ try
     save(fullfile(PathName,FileName),'cells','-append');
     [~,filename,~]=fileparts(FileName);
     cells.exportCSV(fullfile(PathName,[filename,'.csv']));
+    % print image while saving
+    movie = obj.data.movie;
+    h = figure;
+    movie.view(cells);
+    print(gcf,fullfile(PathName,[filename,'.png']),'-dpng');
+    close(h)
 catch error
     msgbox(error.message);
 end

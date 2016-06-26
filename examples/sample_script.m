@@ -2,6 +2,8 @@
 % this is a script example to show how to analyze the default sample
 
 %% setting up and load movie
+
+addpath('./bioformats');
 clear all;clc;close all
 % select movie file
 movie=CellVision3D.Movie('sample_image.dv');
@@ -52,6 +54,10 @@ CellVision3D.CellAnalyzer.extractParticleContourDistanceRelative(cells,'lacO','c
 %% save the result
 % save the full result to the directory of the movie files
 isoverride = 1;
-movie.save(isoverride);
+movie.save(isoverride,[],cells);
 % export only the runned analysis
-cells.exportCSV('sample_image_stats.csv')
+h = figure;
+cells.exportCSV('sample_image_.csv')
+movie.view(cells);
+print(gcf,'sample_image.png','-dpng');
+close(h);
