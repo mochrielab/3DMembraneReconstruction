@@ -32,6 +32,15 @@ for i=1:length(analysismethods)
         case 'extractParticleContourDistanceRelative'
             disc='calculate the relative distance between particle and contour';
             inputformat={'FluorescentParticle3D','FluorescentMembrane3D'};
+        case 'extractParticleNumber'
+            disc='calculate the number of particles';
+            inputformat={'FluorescentParticle3D'};        
+        case 'extractParticleIntensity'
+            disc='calculate the intensity of particles';
+            inputformat={'FluorescentParticle3D'};
+        case 'extractParticleSize'
+            disc='calculate the size of particles';
+            inputformat={'FluorescentParticle3D'};
         otherwise
             disc=[];
             inputformat=[];

@@ -5,6 +5,8 @@
 
 %% setting up and load movie
 clear all;close all;clc;
+addpath('./bioformats');
+channellabel='lacO';
 % select movie file
 movie=CellVision3D.Movie('sample_image_doubleparticle.TIF');
 % display all possible channel types
@@ -41,13 +43,16 @@ movie.view(cells);
 %% reconstruct cell
 cells=cells(1:5); % only choose first 2 cells to make it faster for testing
 % run with images (slow)
-f=figure('Position',[50 50 1200 600]);
-channel.run(cells,[],f);
+% f=figure('Position',[50 50 1200 600]);
+% channel.run(cells,[],f);
 % run without images (much faster)
-% channel.run(cells);
+channel.run(cells);
 %% run the analysis based on constructed cells
 % run particle distance analysis
-CellVision3D.CellAnalyzer.extractParticlePairDistance(cells,'lacO')
+CellVision3D.CellAnalyzer.extractParticlePairDistance(cells, channellabel)
+CellVision3D.CellAnalyzer.extractParticleNumber(cells, channellabel)
+CellVision3D.CellAnalyzer.extractParticleSize(cells, channellabel)
+CellVision3D.CellAnalyzer.extractParticleIntensity(cells, channellabel)
 %% save the result
 % save the full result to the directory of the movie files
 isoverride = 1;

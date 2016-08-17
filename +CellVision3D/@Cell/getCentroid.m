@@ -14,7 +14,8 @@ else
     for icell = 1:length(cells)
         for iparticle = 1:length(cells(icell).particles)
             tmp = cells(icell).particles(iparticle).getCentroid();
-            cnt(icell,1:length(tmp)) = cnt(icell,1:length(tmp))+tmp;
+            cnt(icell,1:length(tmp)) = cnt(icell,1:length(tmp))...
+                +tmp/length(cells(icell).particles);
         end
     end
 end
