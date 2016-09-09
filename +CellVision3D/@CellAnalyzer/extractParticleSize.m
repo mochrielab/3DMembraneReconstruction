@@ -17,7 +17,7 @@ for icell=1:length(cells)
     % intensity array by calculating the particle brightness mean
     for iparticle = 1:numparticles
         particles(iparticle).setUserData('particle_size',...
-            mean(particles(iparticle).sigmas));
+            mean(particles(iparticle).sigmas(:,1)));
     end
         
 end
