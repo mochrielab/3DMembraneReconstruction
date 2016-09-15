@@ -27,7 +27,9 @@ for i=1:length(analysismethods)
             disc='calculate mean radius of contour';
             inputformat={'FluorescentMembrane3D'};
         case 'extractContourVolume'
-            disc='calculate contour volume';
+            disc='calculate contour volume (microns^3)';
+        case 'extractContourArea'
+            disc='calculate contour area (microns^2)';
             inputformat={'FluorescentMembrane3D'};
         case 'extractParticleContourDistanceRelative'
             disc='calculate the relative distance between particle and contour';

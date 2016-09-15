@@ -45,6 +45,9 @@ classdef Contour3D < CellVision3D.Contour & CellVision3D.Object3D
         
         % get volume
         vol=getVolume(obj,varargin);
+
+        % get volume
+        vol=getArea(obj,varargin);
         
         % get mean radius
         r=getMeanRadius(obj,varargin);
