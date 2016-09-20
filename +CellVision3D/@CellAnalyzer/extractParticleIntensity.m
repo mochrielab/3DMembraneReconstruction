@@ -18,7 +18,7 @@ for icell=1:length(cells)
     for iparticle = 1:numparticles
         % set particle intensities
         particles(iparticle).setUserData('particle_intensity',...
-            mean(particles(iparticle).brightness));
+            (particles(iparticle).brightness));
     end
 end
 

@@ -2,3 +2,4 @@
 *.csv
 sample*.mat
 *.png
+tmp*.m
