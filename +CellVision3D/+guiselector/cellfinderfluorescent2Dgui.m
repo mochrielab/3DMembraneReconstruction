@@ -3,6 +3,7 @@ function [ out ] = cellfinderfluorescent2Dgui (img,varargin)
 % cell finder for fluroescent image
 % 3/22/2015
 % Yao Zhao
+import CellVision3D.guiselector.*
 
 % figure handles
 f0=figure('Position',[50 50 1000 750]);
@@ -12,6 +13,7 @@ f2=axes('Parent',f0,'Units','pixel','Position',[0 0 750 750]);
 h=hstruct();
 h.data.th=.3;
 h.data.ax=f2;
+h.data.out=[];
 
 %ui
 f1=uicontrol('Parent',f0,'Style','slider','Min',0,'Max',1,'Value',h.data.th,...
@@ -20,15 +22,17 @@ txt = uicontrol('Style','text',...
     'Position',[760 700 60 20],...
     'String','threshold');
 
-filteredblob(f1,[],img,h,[])
+filteredblob(f1,[],img,h,[]);
 waitfor(f0);
+
+out=h.data.out;
 
 end
 
 
 
 % get centroid of nuclei from the first frame
-function [ out ]=filteredblob(hObj,event,img,h,tag)
+function [  ]=filteredblob(hObj,event,img,h,tag)
 %%
 wsz=31;
 hw=(wsz-1)/2;
@@ -50,6 +54,7 @@ props=regionprops(bw,'Area','Centroid','PixelIdxList','Eccentricity',...
 
 cnt=[];
 bb=[];
+cc=[];
 for i=1:length(props)
     area=props(i).Area;
     centroid=props(i).Centroid;
@@ -62,11 +67,12 @@ for i=1:length(props)
         bw2=imclose(bw2,se1);
         bbtmp=bwboundaries(bw2);
         bb=[bb;bbtmp(1)];
+        cc=[cc,regionprops(bw2,'Area','Centroid','PixelIdxList')];
     end
 end
 
 axes(h.data.ax);
-SI(img);hold on;
+CellVision3D.Image2D.view(img);hold on;
 if ~isempty(bb)
     %     plot(cnt(:,1),cnt(:,2),'ro');
     for i=1:length(bb)
@@ -74,6 +80,7 @@ if ~isempty(bb)
     end
 end
 
+h.data.out=cc;
 
 
 end
