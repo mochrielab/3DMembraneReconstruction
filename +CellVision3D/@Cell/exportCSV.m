@@ -80,7 +80,7 @@ for icell=1:length(cells)
             fprintf(file, '%d,', iframe);
             for idata=1:numcontouruserdata
                 try
-                    udata = contour.userdata.(particleuserdatafilednames{idata});
+                    udata = contour.userdata.(contouruserdatafilednames{idata});
                     if length(udata) == contour.numframes
                         udata = udata(iframe);
                     elseif length(udata) == 1
