@@ -1,5 +1,24 @@
+# ignore temp files
 *~
+
+# ignore analized result
 *.csv
-sample*.mat
+
+# ignore pictures
 *.png
+
+# ignore temp script
 tmp*.m
+
+# ignore .mat file except for illumination fix
+*.mat
+!illumination.mat
+
+# ignore movie files except for samples
+*.dv
+*.tif
+*.TIF
+!sample_image.dv
+!sample_image_doubleparticle.TIF
+!sample_image_mamalian.dv
+!sample_image_er.dv
