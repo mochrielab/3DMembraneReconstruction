@@ -147,6 +147,15 @@ th2=CellVision3D.Image.getPercentageValue(I,.99);
 th1=CellVision3D.Image.getPercentageValue(I,.7);
 cost=sqrt((th2-th1)/2)*(10/mean(r))^2;
 
+% override default cost
+if isnan(obj.cost)
+    display(['use default cost: ',num2str(cost)])
+else
+    display(['default cost: ',num2str(cost),...
+        ' use user provided cost instead: ',num2str(obj.cost)]);
+    cost=obj.cost;
+end
+
 rs0=rs(1)/(rs(2)-rs(1))-1;
 % energy function
 energy=@(ind)CellVision3D.Fitting.ContourEnergy3DSphere(ind,I,cost,rs0,edges,neighbors);

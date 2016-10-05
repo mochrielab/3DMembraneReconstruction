@@ -5,7 +5,7 @@ classdef MeshBuilder3DSphere < CellVision3D.MeshBuilder3D
     % Yao Zhao
     
     properties (SetAccess = public)
-        
+        cost = nan; % cost for mesh fitting
         ndivision = 3; % mesh division parameter, the larger the finer
         padsame = false;% pad the out of boundary z slice with same image as the boundary image, otherwise will pad with zeros
     end
