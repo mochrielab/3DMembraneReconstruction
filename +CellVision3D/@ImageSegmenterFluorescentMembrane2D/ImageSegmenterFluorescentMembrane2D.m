@@ -9,12 +9,37 @@ classdef ImageSegmenterFluorescentMembrane2D < CellVision3D.ImageSegmenter
         ncycles=1 % number of cycles to search for global mininum for canny edge segmentation
     end
     
+    properties (SetAccess = protected)
+        mode;
+    end
+    
+    properties (Constant)
+        mode_options={'automatic', 'thresholding', 'cannyedge'}
+    end
+    
     methods
         % constructor
         function obj=ImageSegmenterFluorescentMembrane2D(varargin)
             obj@CellVision3D.ImageSegmenter(varargin{:});
         end
-        out=segment(obj,im)
+        
+        % segment
+        out=segment(obj,im);
+        
+        % manual segment
+        out=segmentGUI(obj,im);
+        
+        % automatically segment
+        out=segmentAuto(obj,im);
+        
+        % set mode
+        function setMode(obj, mode)
+            if sum(strcmp(mode, obj.mode_options)) ~= 1
+                error('segmentation mod not supported');
+            else
+                obj.mode=mode;
+            end
+        end
     end
     
 end
