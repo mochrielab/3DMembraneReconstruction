@@ -1,6 +1,6 @@
 classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
         CellVision3D.Object3D
-    % microscope channel 
+    % microscope channel
     % 11/17/2015
     
     
@@ -57,6 +57,7 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
                 end
             end
         end
+        
         % grab image projection
         function img=grabProjection(obj,iframe)
             img=zeros(obj.sizeY,obj.sizeX);
@@ -85,6 +86,21 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
             data=obj.data;
             obj.data=[];
         end
+        
+        % merge two channels
+        function mergeData(obj1,obj2,varargin)
+            if length(obj1.data)~=length(obj2.data)
+                error('channels not the same length')
+            end
+            if nargin == 2
+                amp = 1;
+            elseif nargin >2 
+                amp = varargin{1};
+            end
+            for icell = 1:length(obj1.data)
+                obj1.data{icell}=obj1.data{icell}+obj2.data{icell}*amp;
+            end
+        end
         % view projection
         [  ] = viewProjection(obj )
         
@@ -96,7 +112,7 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
     end
     
     methods (Access=public, Static)
-     [ channeltypes, channelclassnames,descriptions ] = getChannelTypes(  )
+        [ channeltypes, channelclassnames,descriptions ] = getChannelTypes(  )
     end
 end
 
