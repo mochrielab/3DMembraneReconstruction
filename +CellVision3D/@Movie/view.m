@@ -5,11 +5,11 @@ function [  ] = view( obj,varargin )
 
 % plot preview of movie, merge or not
 for ichannel=1:min(3,obj.numchannels)
-    if ~strcmp('None',obj.getChannel(ichannel).type)
-        img=obj.getChannel(ichannel).grabProjection(1);
-        if ichannel==1
-            img3=zeros([size(img),3]);
-        end
+    img=obj.getChannel(ichannel).grabProjection(1);
+    if ichannel==1
+        img3=zeros([size(img),3]);
+    end
+    if ~strcmp('None',obj.getChannel(ichannel).type)    
         img3(:,:,ichannel)=(img-min(img(:)))/(max(img(:))-min(img(:)));
     end
 end
