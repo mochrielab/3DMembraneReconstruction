@@ -72,10 +72,19 @@ else
     obj.numstacks=obj.sizeZ;
     obj.numframes=omeMeta1.getPixelsSizeT(0).getValue();
     
+    if ~isnan(obj.startframe) && ~isnan(obj.endframe)
+        obj.numframes = obj.endframe - obj.startframe + 1;
+    else
+        obj.startframe = 1;
+        obj.endframe = obj.numframes;
+    end
     
     for ichannel=1:obj.numchannels
+        
         chooseind=mod(floor((0:length(mov)-1)/obj.numstacks),obj.numchannels)==ichannel-1;
-        obj.channels(ichannel).load(mov(chooseind),obj);
+        channelmov = mov(chooseind);
+        obj.channels(ichannel).load(channelmov(...
+            (obj.startframe-1)*obj.numstacks+1:obj.endframe*obj.numstacks),obj);
     end
     
 end
