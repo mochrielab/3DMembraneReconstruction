@@ -106,6 +106,18 @@ classdef Channel < CellVision3D.HObject  & matlab.mixin.Heterogeneous & ...
         
         % check if some parameter doesnt belong to channel
         array = isNonChannelParam( obj )
+        
+        % convert to 3d gradient images
+        function convert2gradient(obj)
+            for iframe = 1:obj.numframes
+                img3d = imgradient3(obj.grabImage3D(iframe));
+                for istack = 1:obj.numstacks
+                    % this may cause larger memory usage, convert it back
+                    % to original datatype to save memory
+                    obj.data{istack+obj.numstacks*(iframe-1)} = (img3d(:,:,istack));
+                end
+            end
+        end
     end
     
     methods( Abstract)

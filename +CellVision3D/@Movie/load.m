@@ -12,13 +12,14 @@ else
     isUI=0;
     if nargin==1
         data=bfopen(obj.filein);
-    else
+    elseif nargin == 2
         if isa(varargin{1},'function_handle')
             data=bfopen(obj.filein,varargin{:});
             isUI=1;
         elseif isa(varargin{1},'numeric')
             data=bfopenSelect(obj.filein,varargin{1});
         end
+    elseif nargin == 3
     end
     
     
@@ -63,20 +64,32 @@ else
         end
     end
     try
+        if isempty(obj.sizeZ)
+            obj.vox2um=omeMeta1.getPixelsSizeZ(0).getValue();
+        else
+            warning('sizeZ already set, skip reading metadata');
+        end
         obj.sizeX=omeMeta1.getPixelsSizeX(0).getValue();
         obj.sizeY=omeMeta1.getPixelsSizeY(0).getValue();
-        obj.sizeZ=omeMeta1.getPixelsSizeZ(0).getValue();
     catch
         warning('incomplete or no image size information');
     end
     obj.numstacks=obj.sizeZ;
-    obj.numframes=omeMeta1.getPixelsSizeT(0).getValue();
+    if isempty(obj.numframes)
+        obj.numframes=omeMeta1.getPixelsSizeT(0).getValue();
+    else
+        warning('numframes already set, skip reading metadata');
+    end
     
     if ~isnan(obj.startframe) && ~isnan(obj.endframe)
         obj.numframes = obj.endframe - obj.startframe + 1;
     else
         obj.startframe = 1;
         obj.endframe = obj.numframes;
+    end
+    
+    if nargin == 3
+        varargin{2}()
     end
     
     for ichannel=1:obj.numchannels
