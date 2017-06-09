@@ -10,7 +10,7 @@ classdef ImageSegmenterFluorescentMembrane2D < CellVision3D.ImageSegmenter
     end
     
     properties (SetAccess = protected)
-        mode;
+        mode='automatic'
     end
     
     properties (Constant)
