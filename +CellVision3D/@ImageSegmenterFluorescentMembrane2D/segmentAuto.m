@@ -61,8 +61,9 @@ areamin=pi*lobject^2/4/4;
 eccentricity=[ccs.Eccentricity];
 prratio=[ccs.Perimeter]/2/pi./sqrt(area/pi);
 [~,index]=Image.removeNearBorder( cnt,im,lobject );
-ccs=ccs(area<areamax & area>areamin & index' & eccentricity<.6 ...
-    & prratio < 3);
+% ccs=ccs(area<areamax & area>areamin & index' & eccentricity<.6 ...
+%     & prratio < 3); %removed 3/22/2023
+ccs=ccs(index'&area>areamin); %changed 3/22/2023
 out=ccs;
 
 %             bw3=zeros(size(bw2));
