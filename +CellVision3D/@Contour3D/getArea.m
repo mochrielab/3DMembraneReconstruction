@@ -11,7 +11,7 @@ for iframe=1:length(numframes)
         p1=vertices(faces(iface,1),:);
         p2=vertices(faces(iface,2),:);
         p3=vertices(faces(iface,3),:);
-        areas(iframe)=areas(iframe)+1/2*abs(cross(p2-p1,p3-p2));
+        areas(iframe)=areas(iframe)+1/2*norm(cross(p2-p1,p3-p2)); %2021/9/27 change from abs to norm
     end
 end
 
