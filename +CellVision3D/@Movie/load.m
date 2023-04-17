@@ -65,7 +65,7 @@ else
     end
     try
         if isempty(obj.sizeZ)
-            obj.vox2um=omeMeta1.getPixelsSizeZ(0).getValue();
+            obj.sizeZ=omeMeta1.getPixelsSizeZ(0).getValue(); %1/2023
         else
             warning('sizeZ already set, skip reading metadata');
         end
